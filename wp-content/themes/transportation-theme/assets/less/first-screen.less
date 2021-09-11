@@ -1,0 +1,445 @@
+.first-screen {
+  background-image: url(/wp-content/themes/transportation-theme/assets/img/first-screen-background.jpg);
+
+  &__background-wrap {
+    margin-bottom: 135px;
+    position: relative;
+    overflow: hidden;
+  }
+  &__truck-on-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(/wp-content/themes/transportation-theme/assets/img/truck.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    
+    &.truck-animation {
+      animation: truckAnimation 1s 1 ease-out forwards;
+    }
+  }
+  &__container-size {
+    position: relative;
+  }
+  &__content {
+    padding-top: 283px;
+    padding-bottom: 74px;
+  }
+  &__subtitle {
+    color: #ababab;
+    margin-bottom: 22px;
+
+    &-accent {
+      color: #F15A24;
+    }
+  }
+  &__title {
+    max-width: 570px;
+    margin-bottom: 22px;
+  }
+  &__description {
+    color: #BFBFBF;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    line-height: 1.67;
+    max-width: 512px;
+    margin-bottom: 60px;
+  }
+  &__services {
+    padding-bottom: 70px - 18px;
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      width: calc(100% + 18px);
+
+      li {
+        display: inline-block;
+        margin-right: 18px;
+        margin-bottom: 18px;
+
+        a {
+          display: flex;
+          position: relative;
+          height: 100px;
+          background-color: #242424;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 1.22;
+          color: #b4b4b4;
+          text-decoration: none;
+          outline: none !important;
+          transition: background-color .2s ease-out;
+          overflow: hidden;
+
+          span {
+            display: block;
+            width: 169px;
+            padding-top: 16px;
+            padding-right: 20px;
+            padding-left: 20px;
+            padding-bottom: 16px;
+            box-sizing: border-box;
+            position: relative;
+
+            &:after {
+              content: '';
+              background-image: url(/wp-content/themes/transportation-theme/assets/img/service-arrow.svg);
+              background-repeat: no-repeat;
+              width: 16px;
+              height: 12px;
+              display: block;
+              position: absolute;
+              right: 15px;
+              bottom: 15px;
+            }
+          }
+          img {
+            padding-left: 0;
+            width: 110px;
+            max-height: 100px;
+          }
+          &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 110px;
+            background-color: rgba(0, 0, 0, .25);
+            transition: background-color .2s ease-out;
+          }
+
+          &:hover, &:focus, &:active {
+            background-color: #2c2c2c;
+
+            &:after {
+              background-color: rgba(0, 0, 0, .15);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes truckAnimation {
+  0% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@media (min-width: 1921px) {
+  .first-screen {
+    &__truck-on-background {
+      max-width: 1920px;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 1650px) {
+  .first-screen {
+    &__truck-on-background {
+      right: -120px;
+    }
+  }
+}
+
+@media (max-width: 1570px) {
+  .first-screen {
+    &__truck-on-background {
+      background-size: 65vw;
+      right: -7.6vw;
+    }
+  }
+}
+
+@media (max-width: 1480px) {
+  .first-screen {
+    &__background-wrap {
+      margin-bottom: 113px;
+    }
+    &__content {
+      padding-top: 16.5vw;
+      padding-bottom: 4vw;
+    }
+    &__description {
+      font-size: 14px;
+      max-width: 365px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    &__services {
+      .menu {
+        width: 100%;
+
+        li {
+          margin-right: 2px;
+          margin-bottom: 2px;
+
+          a {
+            height: 74px;
+            font-size: 13px;
+  
+            img {
+              display: none;
+            }
+            span {
+              width: 100%;
+            }
+
+            &::after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1480px) {
+  .first-screen {
+    &__services {
+      .menu {
+        li {
+          width: 16.45%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .first-screen {
+    &__content {
+      padding-bottom: 3vw;
+    }
+  }
+}
+
+@media (max-width: 1160px) {
+  .first-screen {
+    &__content {
+      padding-bottom: 2vw;
+    }
+    &__services {
+      .menu {
+        li {
+          a {
+            span {
+              padding-top: 10px;
+              padding-left: 15px;
+              padding-right: 14px;
+              padding-bottom: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1110px) {
+  .first-screen {
+    &__content {
+      padding-bottom: 0;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .first-screen {
+    &__content {
+      padding-top: 169px;
+    }
+    &__truck-on-background {
+      margin-top: 182px;
+      background-position: center right;
+    }
+  }
+}
+
+@media (max-width: 1019px) {
+  .first-screen {
+    &__services {
+      .menu {
+        li {
+          width: 19.7%;
+          min-width: 158px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .first-screen {
+    &__truck-on-background {
+      background-size: 624px;
+      right: calc((-169px + 10vw) * 3);
+    }
+  }
+}
+
+@media (max-width: 859px) {
+  .first-screen {
+    &__services {
+      .menu {
+        li {
+          width: 24.65%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 744px) {
+  .first-screen {
+    &__truck-on-background {
+      right: calc((-180px + 10vw) * 3);
+    }
+  }
+}
+
+@media (max-width: 710px) {
+  .first-screen {
+    &__title {
+      font-size: 9.4vw;
+    }
+    &__truck-on-background {
+      display: none;
+    }
+    &__background-wrap {
+      margin-bottom: 10.9vw;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .first-screen {
+    &__content {
+      padding-top: 28vw;
+    }
+  }
+}
+
+@media (max-width: 699px) {
+  .first-screen {
+    &__services {
+      .menu {
+        li {
+          width: 32.8%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 539px) {
+  .first-screen {
+    &__services {
+      .menu {
+        li {
+          width: 47.8%;
+          margin-right: 16px;
+          margin-bottom: 16px;
+
+          &:nth-child(2n + 2) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .first-screen {
+    &__subtitle {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    &__title {
+      line-height: 1.22;
+      margin-bottom: 10px;
+    }
+    &__description {
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    &__services {
+      padding-bottom: 10px;
+    }
+  }
+}
+
+@media (max-width: 402px) {
+  .first-screen {
+    &__services {
+      .menu {
+        li {
+          width: 47%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 371px) {
+  .first-screen {
+    &__services {
+      .menu {
+        li {
+          min-width: 132px;
+          margin-bottom: 10px;
+
+          a {
+            height: 50px;
+            font-size: 11px;
+
+            span {
+              overflow: hidden;
+
+              &::after {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .first-screen {
+    &__content {
+      padding-top: 90px;
+    }
+  }
+}
+
+@media (max-width: 319px) {
+  .first-screen {
+    &__services {
+      .menu {
+        li {
+          width: 100%;
+          margin-right: 0px;
+
+          a {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}

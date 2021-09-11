@@ -1,0 +1,56 @@
+html, body {
+  overflow-x: hidden;
+}
+body {
+  font-family: 'JetBrains Mono', sans-serif;
+  background-color: #1f1f1f;
+}
+.disabled {
+  display: none;
+}
+.screen-title {
+  position: relative;
+  right: 3px;
+  font-weight: 700;
+  font-size: 79px;
+  color: #fff;
+}
+.disabled-transition {
+  transition: 0s !important;
+}
+section {
+  overflow: hidden;
+}
+.block-scroll {
+  overflow: hidden;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.text-button {
+  cursor: pointer;
+  color: #d1b4ff;
+  border-bottom: 1px solid #d1b4ff;
+  transition: color .2s ease-out, border-bottom-color .2s ease-out;
+
+  &:hover, &:focus, &:active {
+    color: #eaddff;
+    border-bottom-color: #eaddff;
+  }
+}
+.background-size {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1920px 100%;
+}
+.img-cover {
+  position: absolute;
+  left: -10000%;
+  right: -10000%;
+  top: -10000%;
+  bottom: -10000%;
+  margin: auto auto;
+  min-width: 1000%;
+  min-height: 1000%;
+  transform: scale(0.1);
+}

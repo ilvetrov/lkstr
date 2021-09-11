@@ -1,0 +1,54 @@
+.accent-button {
+  display: inline-block;
+  background: #F15A23;
+  padding: 5px;
+  text-decoration: none;
+  outline: none !important;
+  box-shadow: 0 8px 11px rgba(0, 0, 0, .5);
+  transition: background-color .2s ease-out;
+  cursor: pointer;
+  user-select: none;
+
+  &__inner-border {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-sizing: border-box;
+  }
+  &__content {
+    margin-top: 13px;
+    margin-bottom: 15px;
+    margin-left: 33px;
+    margin-right: 27px;
+    display: flex;
+    align-items: center;
+  }
+  &__text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.22;
+    font-weight: 700;
+    font-weight: 700;
+    margin-right: 5px;
+  }
+  &__arrow {
+    position: relative;
+    top: 1px;
+  }
+
+  &:hover, &:focus, &:active {
+    background: #ff6127;
+  }
+
+  &_small & {
+    &__content {
+      margin-top: 13px;
+      margin-bottom: 13px;
+      margin-left: 25px;
+      margin-right: 25px;
+    }
+    &__text {
+      margin-right: 5px;
+    }
+  }
+}

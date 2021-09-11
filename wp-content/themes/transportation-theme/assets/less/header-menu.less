@@ -1,0 +1,344 @@
+.header-menu {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: #000;
+  opacity: 1;
+  transition: opacity .2s ease-out;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  &__container-size {
+    height: 100%;
+  }
+  &__wrap {
+    padding-top: 50px;
+    padding-bottom: 10vh;
+    min-height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+  }
+  &__content {
+    transform: translateY(0px);
+    transition: transform .2s ease-out;
+    margin-top: 18.4vh;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  &__button {
+    cursor: pointer;
+    display: inline-block;
+    user-select: none;
+
+    &-line {
+      width: 50px;
+      height: 3px;
+      background: #fff;
+      margin-bottom: 5px;
+      transform: scaleX(0.85);
+      transform-origin: left;
+      transition: transform .3s ease-out;
+      
+      &_center {
+        transform: scaleX(1.2);
+        width: 25px;
+        background: #F15A24;
+      }
+    }
+
+    &:hover &, &:focus &, &:active & {
+      &-line {
+        transform: scaleX(1);
+        &_center {
+          transform: scaleX(1.7);
+        }
+      }
+    }
+    &.active & {
+      &-line {
+        transform: scaleX(1);
+        &_center {
+          transform: scaleX(2);
+        }
+      }
+    }
+  }
+  &__close-button {
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+
+    &-line {
+      position: absolute;
+      height: 2px;
+      width: 133%;
+      background-color: #F15A24;
+      transition: background-color .2s ease-out;
+
+      &:first-child {
+        transform: rotate(-45deg);
+      }
+      &:last-child {
+        transform: rotate(45deg);
+      }
+    }
+
+    &:hover &, &:focus &, &:active & {
+      &-line {
+        background-color: #f57445;
+      }
+    }
+  }
+  &__list {
+    text-align: center;
+    > .menu-item {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.22;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 40px;
+      
+      > a, > .header-menu-services__header {
+        display: inline-block;
+        cursor: pointer;
+        color: #fff;
+        text-decoration: none;
+        outline: none;
+        position: relative;
+        transition: color .2s ease-out;
+
+        &:after {
+          content: '';
+          width: 50px;
+          height: 3px;
+          position: absolute;
+          left: 0;
+          bottom: -7px;
+          background: #F15A24;
+          opacity: 0;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform .2s ease-out, opacity .2s ease-out;
+        }
+
+        svg path {
+          transition: fill .2s ease-out;
+        }
+
+        &.active, &:hover {
+          color: #F15A24;
+          
+          &:after {
+            opacity: 1;
+            transform: scaleX(1);
+          }
+          svg path {
+            fill: #F15A24;
+          }
+        }
+
+        &.active {
+          .header-menu-services__arrow {
+            transform: rotate(180deg);
+          }
+        }
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  &__social-networks {
+    display: flex;
+    justify-content: center;
+    margin-top: 76px;
+  }
+  
+  &-services {
+    &__header {
+      display: inline-flex !important;
+      align-items: center;
+    }
+    &__arrow {
+      position: relative;
+      top: 3px;
+      margin-left: 10.5px;
+      transform: rotate(0deg);
+      transition: transform .2s ease-out;
+    }
+    &__list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .menu-image {
+        display: none;
+
+        &-title {
+          padding-right: 0;
+        }
+      }
+      .menu-item {
+        display: inline-flex;
+        margin-top: 30px;
+        
+        a {
+          font-size: 18px;
+          color: #BFBFBF;
+          font-weight: 600;
+          text-decoration: none;
+          line-height: 1.22;
+          transition: color .2s ease-out;
+
+          &:hover {
+            color: #ececec;
+          }
+        }
+
+        &:first-child {
+          margin-top: 40px;
+        }
+      }
+
+      &-wrap {
+        max-height: 2000px;
+        overflow: hidden;
+        transition: max-height 1s ease-out;
+        
+        &.hidden {
+          max-height: 0px;
+          transition: max-height .5s ease-out;
+        }
+      }
+    }
+  }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+  &.hidden & {
+    &__content {
+      transform: translateY(-30px);
+    }
+  }
+}
+
+@media (max-width: 1480px) {
+  .header-menu {
+    &__wrap {
+      padding-top: 30px;
+      padding-bottom: 50px;
+    }
+    &__content {
+      margin-top: 2.93vw;
+    }
+    &__list {
+      > .menu-item {
+        font-size: 24px;
+        margin-bottom: 30px;
+      }
+    }
+    &-services {
+      &__list {
+        .menu-item {
+          margin-top: 25px;
+        }
+      }
+      &__arrow {
+        height: 10px;
+        width: 14.6px;
+        top: 2px;
+      }
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .header-menu {
+    &__wrap {
+      padding-top: 37px;
+    }
+    &__top {
+      height: auto;
+    }
+    &__content {
+      margin-top: 76px;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .header-menu {
+    &__wrap {
+      padding-top: 34px;
+    }
+    &__button {
+      &-line {
+        width: 30px;
+        height: 2px;
+        margin-bottom: 4px;
+        
+        &_center {
+          width: 15px;
+        }
+      }
+    }
+    &__close-button {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .header-menu {
+    &__wrap {
+      padding-top: 24px;
+    }
+    &__list {
+      > .menu-item  {
+        font-size: 18px;
+      }
+    }
+    &-services {
+      &__list {
+        .menu-item {
+          margin-top: 15px;
+
+          &:first-child {
+            margin-top: 30px;
+          }
+        }
+        .menu-image-title {
+          font-size: 14px;
+        }
+      }
+      &__arrow {
+        height: 6px;
+        width: 8.75px;
+        margin-left: 5px;
+        top: 1px;
+      }
+    }
+  }
+}

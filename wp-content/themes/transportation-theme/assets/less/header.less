@@ -1,0 +1,169 @@
+.site-header {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  box-sizing: border-box;
+  pointer-events: none;
+
+  &__container-size {
+    max-width: 1780px;
+    position: relative;
+    z-index: 11;
+  }
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  &__menu-button {
+    cursor: pointer;
+    display: inline-block;
+    user-select: none;
+    pointer-events: auto;
+
+    &-line {
+      width: 50px;
+      height: 3px;
+      background: #fff;
+      margin-bottom: 5px;
+      transform: scaleX(1);
+      transform-origin: left;
+      transition: transform .3s ease-out;
+
+      &_center {
+        width: 25px;
+        background: #F15A24;
+      }
+    }
+
+    &:hover &, &:focus &, &:active & {
+      &-line {
+        transform: scaleX(0.9);
+        &_center {
+          transform: scaleX(1.2);
+        }
+      }
+    }
+    &.active & {
+      &-line {
+        transform: scaleX(1);
+        &_center {
+          transform: scaleX(2);
+        }
+      }
+    }
+  }
+  &__logo {
+    &-wrap {
+      pointer-events: auto;
+    }
+  }
+  &__phone {
+    display: flex;
+    font-size: 16px;
+    line-height: 1.22;
+    color: #fff;
+    text-decoration: none;
+    outline: none !important;
+    align-items: center;
+    justify-content: flex-end;
+    transition: color .2s ease-out;
+    pointer-events: auto;
+
+    &-icon {
+      margin-right: 20px;
+      transform: translateX(0px);
+      transition: transform .2s ease-out;
+    }
+
+    &:hover, &:focus, &:active {
+      color: #ffe1dd;
+    }
+    &:hover & {
+      &-icon {
+        transform: translateX(-2px);
+      }
+    }
+  }
+  &__side {
+    width: 210px;
+  }
+  &__background-blur {
+    background: linear-gradient(rgb(20, 20, 20), rgba(20, 20, 20, 0));
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    z-index: 10;
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 1480px) {
+  .site-header {
+    &__content {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+  }
+}
+
+@media (min-width: 901px) {
+  .site-header {
+    &__void-mobile {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    &__logo {
+      height: 50px;
+    }
+    &__phone {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .site-header {
+    &__menu-button {
+      padding: 10px 15px;
+      position: relative;
+      right: 15px;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .site-header {
+    &__logo {
+      height: 30px;
+    }
+    &__menu-button {
+      &-line {
+        width: 30px;
+        height: 2px;
+        margin-bottom: 4px;
+        
+        &_center {
+          width: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .site-header {
+    &__content {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  }
+}

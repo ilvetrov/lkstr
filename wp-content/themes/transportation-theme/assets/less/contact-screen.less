@@ -1,0 +1,360 @@
+.contact-screen {
+
+  &__content {
+    padding-top: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  &__title {
+    margin-bottom: 30px;
+  }
+  &__left-side {
+    width: 100%;
+    max-width: 50%;
+    padding-bottom: 70px;
+  }
+  &__right-side {
+    width: 100%;
+    height: 580px;
+    max-width: 50%;
+    background-color: rgba(0, 0, 0, .5);
+  }
+  &__info {
+    margin-right: 70px;
+    margin-top: 45px;
+    line-height: 1.22;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+
+    &-bank {
+      color: #BFBFBF;
+      font-size: 14px;
+    }
+    &-juridical {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      color: #7E7E7E;
+
+      &-left {
+        display: flex;
+        font-size: 13px;
+
+        > div {
+          margin-right: 15px;
+          margin-top: 15px;
+
+          &:last-of-type {
+            margin-right: 0;
+          }
+        }
+      }
+      &-right {
+        font-size: 14px;
+        &-accent {
+          color: #F15A24;
+        }
+      }
+    }
+  }
+}
+.contact-block {
+  max-width: 583px;
+  display: inline-block;
+  background-color: #1F1F1F;
+  margin-left: 118px;
+  position: relative;
+  word-break: break-word;
+
+  &__wrap {
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__list-item {
+    display: flex;
+    align-items: flex-start;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.22;
+    margin-bottom: 20px;
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+
+    &-value {
+      margin-top: 5px;
+      margin-left: 20px;
+    }
+    &-icon {
+      transform: translateX(0px);
+      transition: transform .2s ease-out;
+    }
+
+    &[href] {
+      transition: color .2s ease-out;
+
+      &:hover {
+        color: #ffe1dd;
+      }
+    }
+    &[href]:hover & {
+      &-icon {
+        transform: translateX(-2px);
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &__week-day {
+    color: #BFBFBF;
+  }
+  &__time {
+    margin-bottom: 10px;
+    font-size: 14px;
+
+    &-value {
+      &_accent {
+        color: #F15A24;
+      }
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  &__second-part {
+    margin-left: 99px;
+  }
+  &__social-networks {
+    .social-networks-list {
+      display: flex;
+      flex-direction: column;
+
+      li {
+        margin-left: 0;
+        margin-bottom: 30px;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  &__ornament {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    transform: scale(1);
+    transition: transform 2s ease-out;
+
+    &-item {
+      position: absolute;
+      user-select: none;
+
+      &:nth-child(1) {
+        top: 0;
+        left: 0;
+      }
+      &:nth-child(2) {
+        top: 0;
+        right: 0;
+        transform: rotateY(180deg);
+      }
+      &:nth-child(3) {
+        bottom: 0;
+        left: 0;
+        transform: rotateX(180deg);
+      }
+      &:nth-child(4) {
+        bottom: 0;
+        right: 0;
+        transform: rotateY(180deg) rotateX(180deg);
+      }
+    }
+
+    &.increased-animation {
+      transform: scale(1.03);
+    }
+  }
+}
+
+@media (max-width: 1560px) {
+  .contact-screen {
+    &__info-juridical-left {
+      flex-direction: column;
+  
+      > div {
+        margin-top: 5px;
+      }
+    }
+  }
+}
+@media (min-width: 1024px), (max-width: 672px) {
+  @media (max-width: 1560px) {
+    .contact-block {
+      margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 1440px) {
+    .contact-screen__info {
+      max-width: 583px;
+      margin-right: 0;
+    }
+  }
+  
+  @media (max-width: 1285px) {
+    .contact-block {
+      &__wrap {
+        padding: 30px;
+      }
+      &__second-part {
+        margin-left: 49px;
+      }
+  
+    }
+  }
+}
+
+@media (max-width: 1285px) and (min-width: 1024px) {
+  .contact-screen__info {
+    max-width: 543px;
+  }
+}
+
+@media (max-width: 1194px) {
+  .contact-screen {
+    &__left-side {
+      width: 567px;
+      min-width: 567px;
+      padding-right: 30px;
+      box-sizing: border-box;
+    }
+    &__right-side {
+      width: calc(100% - 567px);
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .contact-screen {
+    &__content {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    &__left-side {
+      padding-right: 0;
+    }
+    &__left-side, &__right-side {
+      width: 100%;
+      max-width: 100%;
+    }
+    &__info {
+      margin-right: 0;
+    }
+  }
+  .contact-block {
+    margin-left: 11.5vw;
+  }
+}
+
+@media (max-width: 850px) {
+  .contact-block {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 672px) {
+  .contact-screen {
+    &__left-side {
+      padding-bottom: 6.3vw;
+    }
+  }
+}
+
+@media (max-width: 627px) {
+  .contact-screen {
+    &__left-side {
+      min-width: auto;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .contact-block {
+    &__wrap {
+      flex-direction: column;
+      padding: 20px;
+    }
+    &__list-item {
+      &-wrap {
+        display: flex;
+        align-items: center;
+        align-self: stretch;
+      }
+      &-value {
+        font-size: 14px;
+        margin-top: 0;
+        margin-left: 15px;
+      }
+    }
+    &__second-part {
+      margin-left: 0;
+    }
+    &__social-networks {
+      margin-top: 25px;
+
+      .social-networks-list {
+        flex-direction: row;
+
+        li {
+          margin-bottom: 0;
+          margin-right: 30px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+  .contact-screen {
+    &__right-side {
+      height: 80vh;
+      max-height: 450px;
+      > ymaps {
+        height: 80vh !important;
+        max-height: 450px !important;
+      }
+    }
+    &__info {
+      &-bank {
+        font-size: 11px;
+      }
+      &-juridical {
+        flex-direction: column;
+        align-items: flex-start;
+  
+        &-left {
+          div {
+            font-size: 11px;
+          }
+        }
+        &-right {
+          margin-top: 10px;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}

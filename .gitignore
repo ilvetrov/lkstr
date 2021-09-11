@@ -1,0 +1,8 @@
+node_modules/
+wp-content/uploads/
+
+*.log
+*.sql
+*.sqlite
+wp-config.php
+package-lock.json

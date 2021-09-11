@@ -1,0 +1,19 @@
+<?php
+
+function sendMail($name, $phone)
+{
+  $recipients = get_global_field('call-pop-up-recipients');
+  if ($recipients) {
+    $emailSubject = get_global_field('call-pop-up-email-subject') ? get_global_field('call-pop-up-email-subject') : 'Новая заявка с сайта severtrans.net';
+
+    return wp_mail($recipients, $emailSubject, getMailHtml($name, $phone), [
+      'content-type' => 'text/html'
+    ]);
+  }
+}
+function getMailHtml($name, $phone)
+{
+  ob_start();
+  require get_template_directory() . '/template-parts/mail.php';
+  return ob_get_clean();
+}
