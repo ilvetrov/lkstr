@@ -17,6 +17,8 @@ RewriteRule . /index.php [L]
 
 RedirectMatch 404 package.json
 RedirectMatch 404 package-lock.json
+RedirectMatch 404 composer.json
+RedirectMatch 404 composer.lock
 RedirectMatch 404 gulpfile.js
 RedirectMatch 404 license.txt
 RedirectMatch 404 node_modules
