@@ -4,16 +4,22 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe
+class ComposerStaticInitd6a367a1269cadc206a768e0fa3cce7c
 {
     public static $files = array (
+        'ce89ac35a6c330c55f4710717db9ff78' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/functions.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         '3919eeb97e98d4648304477f8ef734ba' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'm' => 
+        array (
+            'mikemccabe\\JsonPatch\\' => 21,
+        ),
         'S' => 
         array (
+            'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\EventDispatcher\\' => 34,
         ),
         'P' => 
@@ -23,6 +29,14 @@ class ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe
     );
 
     public static $prefixDirsPsr4 = array (
+        'mikemccabe\\JsonPatch\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mikemccabe/json-patch-php/src',
+        ),
+        'Symfony\\Component\\Process\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/process',
+        ),
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
@@ -46,7 +60,6 @@ class ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe
             'OpenCloud' => 
             array (
                 0 => __DIR__ . '/..' . '/rackspace/php-opencloud/lib',
-                1 => __DIR__ . '/..' . '/rackspace/php-opencloud/tests',
             ),
         ),
         'N' => 
@@ -94,12 +107,20 @@ class ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe
             array (
                 0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
             ),
+            'ComponentInstaller' => 
+            array (
+                0 => __DIR__ . '/..' . '/robloach/component-installer/src',
+            ),
         ),
         'A' => 
         array (
             'Aws' => 
             array (
                 0 => __DIR__ . '/..' . '/aws/aws-sdk-php/src',
+            ),
+            'Assetic' => 
+            array (
+                0 => __DIR__ . '/..' . '/kriswallsmith/assetic/src',
             ),
         ),
     );
@@ -133,10 +154,10 @@ class ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd6a367a1269cadc206a768e0fa3cce7c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd6a367a1269cadc206a768e0fa3cce7c::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitd6a367a1269cadc206a768e0fa3cce7c::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitd6a367a1269cadc206a768e0fa3cce7c::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -254,10 +254,9 @@ class UpdraftPlus_Backup_History {
 	/**
 	 * Used by self::always_get_from_db()
 	 *
-	 * @param  String $v - ignored
 	 * @return Mixed - the database option
 	 */
-	public static function filter_updraft_backup_history($v) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public static function filter_updraft_backup_history() {
 		global $wpdb;
 		$row = $wpdb->get_row($wpdb->prepare("SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", 'updraft_backup_history'));
 		if (is_object($row)) return maybe_unserialize($row->option_value);
@@ -510,7 +509,7 @@ class UpdraftPlus_Backup_History {
 					'code' => 'possibleforeign_'.md5($entry),
 					'desc' => $entry,
 					'method' => '',
-					'message' => __('This file does not appear to be an UpdraftPlus backup archive (such files are .zip or .gz files which have a name like: backup_(time)_(site name)_(code)_(type).(zip|gz)).', 'updraftplus').' <a href="https://updraftplus.com/shop/updraftplus-premium/" target="_blank">'.__('If this is a backup created by a different backup plugin, then UpdraftPlus Premium may be able to help you.', 'updraftplus').'</a>'
+					'message' => __('This file does not appear to be an UpdraftPlus backup archive (such files are .zip or .gz files which have a name like: backup_(time)_(site name)_(code)_(type).(zip|gz)).', 'updraftplus').' <a href="'.$updraftplus->get_url('premium').'" target="_blank">'.__('If this is a backup created by a different backup plugin, then UpdraftPlus Premium may be able to help you.', 'updraftplus').'</a>'
 				);
 				$messages[$potmessage['code']] = $potmessage;
 				continue;
@@ -767,7 +766,7 @@ class UpdraftPlus_Backup_History {
 
 		$backup_history = self::get_history();
 
-		foreach ($backup_history as $key => $backup) {
+		foreach ($backup_history as $backup) {
 
 			$remote_sent = !empty($backup['service']) && ((is_array($backup['service']) && in_array('remotesend', $backup['service'])) || 'remotesend' === $backup['service']);
 			if ($remote_sent) continue;

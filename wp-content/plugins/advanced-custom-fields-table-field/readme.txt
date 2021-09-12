@@ -2,8 +2,8 @@
 Contributors: jonua
 Tags: acf table
 Requires at least: 5.3
-Tested up to: 5.4.1
-Stable tag: 1.3.10
+Tested up to: 5.7
+Stable tag: 1.3.14
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -235,13 +235,61 @@ Or you can **insert a table from a ACF option page**…
 
 You can use the ACF PHP function `update_field()` to change a tables data.
 
-Example: adding a new row
+__Notice__
+
+- Make sure that the number of entries in the header array matches the number of cells in the body rows.
+- The array key 'c' stands for the content of the cells to have the option of adding other cell setting in future development.
+- The table data obtained by get_field() are formatted and differ by the original database data obtained by get_post_meta().
+
+__Example of changing table data using get_field() and update_field()__
+
+`
+// the post ID where to update the table field
+$post_id = 123;
+
+$table_data = get_field( 'my_table', $post_id );
+
+$table_data = array(
+	'use_header' => true, // boolean true/false
+	'caption' => 'My Caption',
+	'header' => array(
+		0 => array(
+			'c' => 'A',
+		),
+		1 => array(
+			'c' => 'B',
+		),
+	),
+	'body' => array(
+		0 => array(
+			0 => array(
+				'c' => 'The content of first cell of first row',
+			),
+			1 => array(
+				'c' => 'The content of second cell of first row',
+			),
+		),
+		1 => array(
+			0 => array(
+				'c' => The content of first cell of second row',
+			),
+			1 => array(
+				'c' => 'The content of second cell of second row',
+			),
+		),
+	)
+);
+
+update_field( 'my_table', $table_data, $post_id );
+`
+
+__Example of adding a new row__
 `
 // the post ID where to update the table field
 $post_id = 123;
 
 // gets the table data
-$table_data = get_field( 'table', $post_id );
+$table_data = get_field( 'my_table', $post_id );
 
 // defines the new row and its columns
 $new_row = array(
@@ -264,7 +312,7 @@ $new_row = array(
 array_push( $table_data['body'], $new_row );
 
 // saves the new table data
-update_field( 'table', $table_data, $post_id );
+update_field( 'my_table', $table_data, $post_id );
 `
 
 = Third party plugins issues =
@@ -308,6 +356,20 @@ However, only when activated as a plugin will updates be available.
 
 
 == Changelog ==
+
+= 1.3.14 =
+* Prevents the font-size and line-height in the blue editor window of the table cells from being overwritten by other styles.
+* Fixes an issue in update_field() where setting the "use_header" option to false did not work.
+
+= 1.3.13 =
+* Fixes missing sortable columns and rows in ACF Gutenberg blocks
+* Updates depricated jQuery functionalities
+
+= 1.3.12 =
+* Updates styles of acf buttons plus and minus
+
+= 1.3.11 =
+* Adds support for updating term type by update_field()
 
 = 1.3.10 =
 * Fixes table cell content and caption update issue on ACF Gutenberg blocks

@@ -1,10 +1,9 @@
 <?php
-
 /*
 Plugin Name: ACF Photo Gallery Field
 Plugin URI: http://www.navz.me/
 Description: An extension for Advance Custom Fields which lets you add photo gallery functionality on your websites.
-Version: 1.6.8
+Version: 1.6.9
 Author: Navneil Naicker
 Author URI: http://www.navz.me/
 License: GPLv2 or later
@@ -40,7 +39,7 @@ if( !class_exists('acf_plugin_photo_gallery') ) :
 			
 			// vars
 			$this->settings = array(
-				'version'	=> '1.6.8',
+				'version'	=> '1.6.9',
 				'url'		=> plugin_dir_url( __FILE__ ),
 				'path'		=> plugin_dir_path( __FILE__ )
 			);
@@ -135,3 +134,52 @@ require_once( dirname(__FILE__) . '/includes/acf_photo_gallery_image_fields.php'
 
 //Metabox for the photo edit
 require_once( dirname(__FILE__) . '/includes/acf_photo_gallery_edit.php' );
+
+add_action('admin_notices', 'acf_pgf_admin_notice');
+function acf_pgf_admin_notice(){
+	if( get_option('acf-pgf-dnt-show-msg') == 'yes' ){ ?>
+	<div class="notice notice-info is-dismissible">
+		<p>ACF Photo Gallery Field is a free to use plugin. It would be nice you could donate $5.00 USD to help in future development of this plugin. To donate please 
+		<a href="http://shop.navz.me/donation" 
+		   target="_blank" 
+		   style="background:#E14D43;color:#fff;text-decoration: none;padding: 5px 12px;border-radius: 3px;margin-left: 5px;">Click here</a> |
+		<a href="<?php echo admin_url('admin-ajax.php?action=acf_pgf_dnt_msg_never&nonce='.wp_create_nonce("navz-photo-gallery/navz-photo-gallery.php")); ?>" 
+			class="acf-pgf-dnt-msg-never">Don't show me again</a>
+		</p>
+	</div>
+<?php 	}
+}
+
+add_action('upgrader_process_complete', 'acf_pgf_upgrader_process_complete',10, 2);
+function acf_pgf_upgrader_process_complete($upgrader_object, $options){
+	$current_plugin_path_name = 'navz-photo-gallery/navz-photo-gallery.php';
+	if ($options['action'] == 'update' && $options['type'] == 'plugin'){
+		foreach($options['plugins'] as $each_plugin){
+			if ($each_plugin == $current_plugin_path_name){
+				update_option('acf-pgf-dnt-show-msg', 'yes');
+			}
+		}
+	}
+}
+
+add_action("wp_ajax_acf_pgf_dnt_msg_never", "acf_pgf_dnt_msg_never");
+function acf_pgf_dnt_msg_never(){
+	update_option('acf-pgf-dnt-show-msg', 'no');
+	wp_redirect($_SERVER['HTTP_REFERER']);
+	die();
+}
+
+add_filter('cron_schedules', 'acf_pgf_schedules');
+function acf_pgf_schedules($schedules){
+	$schedules['acf_pgf_cron_weekly'] = array('interval' => 604800, 'display' => 'Once Weekly');
+	return $schedules;
+}
+
+if (!wp_next_scheduled('acf_pgf_cron_weekly')){
+	wp_schedule_event(1481799444, 'acf_pgf_cron_weekly', 'acf_pgf_cron_weekly');
+}
+
+add_action('acf_pgf_cron_weekly', 'acf_pgf_cron_weekly_exec');
+function acf_pgf_cron_weekly_exec(){
+	update_option('acf-pgf-dnt-show-msg', 'yes');
+}

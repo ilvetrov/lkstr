@@ -45,8 +45,8 @@ abstract class UpdraftPlus_RemoteStorage_Addons_Base_v2 extends UpdraftPlus_Back
 	/**
 	 * download method: takes a file name (base name), and removes it from the cloud storage
 	 *
-	 * @param  string $file specific file for being removed from cloud storage
-	 * @return array
+	 * @param  String $file specific file for being removed from cloud storage
+	 * @return Array
 	 */
 	public function download($file) {
 		return $this->download_file(false, $file);
@@ -129,13 +129,13 @@ abstract class UpdraftPlus_RemoteStorage_Addons_Base_v2 extends UpdraftPlus_Back
 	/**
 	 * This function handles bootstrapping and calling the remote methods delete function
 	 *
-	 * @param boolean $ret       - A boolean value
-	 * @param array   $files     - An array of files to delete.
-	 * @param boolean $ignore_it - unused parameter
+	 * @param Boolean $ret       - A boolean value
+	 * @param Array   $files     - An array of files to delete.
+	 * @param Boolean $ignore_it - unused parameter
 	 *
 	 * @return - On success returns true, false or WordPress Error on failure
 	 */
-	public function delete_files($ret, $files, $ignore_it = false) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+	public function delete_files($ret, $files, $ignore_it = false) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- $ignore_it is unused
 
 		global $updraftplus;
 
@@ -166,7 +166,7 @@ abstract class UpdraftPlus_RemoteStorage_Addons_Base_v2 extends UpdraftPlus_Back
 		$ret = true;
 
 		if ($this->supports_feature('multi_delete')) {
-			$updraftplus->log("Delete remote files: ".implode($files));
+			$updraftplus->log("Delete remote files: ".implode(', ', $files));
 			try {
 				$responses = $this->do_delete($files);
 
@@ -288,7 +288,7 @@ abstract class UpdraftPlus_RemoteStorage_Addons_Base_v2 extends UpdraftPlus_Back
 	 * Modifies handerbar template options
 	 *
 	 * @param array $opts
-	 * @return array - Modified handerbar template options
+	 * @return Array - Modified handerbar template options
 	 */
 	public function transform_options_for_template($opts) {
 		if (method_exists($this, 'do_transform_options_for_template')) {
@@ -347,7 +347,7 @@ abstract class UpdraftPlus_RemoteStorage_Addons_Base_v2 extends UpdraftPlus_Back
 		
 		if (is_wp_error($storage)) {
 			echo __("Failed", 'updraftplus').": ";
-			foreach ($storage->get_error_messages() as $key => $msg) {
+			foreach ($storage->get_error_messages() as $msg) {
 				echo "$msg\n";
 			}
 			return;
