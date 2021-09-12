@@ -147,16 +147,8 @@ add_action( 'widgets_init', 'transportation_theme_widgets_init' );
  * Enqueue scripts and styles.
  */
 function transportation_theme_scripts() {
-	wp_enqueue_style( 'transportation-theme-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'transportation-theme-style', 'rtl', 'replace' );
-	
 	wp_enqueue_style( 'transportation-theme-united-styles', get_template_directory_uri() . '/assets/css/styles.css', array(), _S_VERSION );
 	wp_enqueue_script( 'transportation-theme-united-scripts', get_template_directory_uri() . '/assets/js/scripts.js', array(), _S_VERSION, true );
-	// wp_enqueue_script( 'transportation-theme-carousel-script', get_template_directory_uri() . '/assets/js/swipe-carousel.js', array(), _S_VERSION, true );
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
 }
 add_action( 'wp_enqueue_scripts', 'transportation_theme_scripts' );
 
@@ -195,6 +187,8 @@ CSRF::init();
 require get_template_directory() . '/inc/post-requests.php';
 
 require get_template_directory() . '/inc/calc-table-processor.php';
+
+require get_template_directory() . '/inc/disable-defaults.php';
 
 /**
  * Load Jetpack compatibility file.
