@@ -58,10 +58,7 @@ function showPopUp(popUp, popUpButton = undefined) {
   }
 
   if (centerContentOnButton && popUpButton) {
-    const popUpButtonPosition = popUpButton.getBoundingClientRect();
-    const popUpPosition = popUp.getBoundingClientRect();
-    popUp.style.left = (popUpButtonPosition.x + popUpButtonPosition.width / 2 - popUpPosition.width / 2) + 'px';
-    popUp.style.top = (popUpButtonPosition.y + popUpButtonPosition.height) + 'px';
+    setPositionToCenter(popUp, popUpButton);
   }
 
   if (popUpIsList) {
@@ -71,6 +68,33 @@ function showPopUp(popUp, popUpButton = undefined) {
   setTimeout(() => {
     popUp.classList.remove('hidden');
   }, 20);
+}
+
+function setPositionToCenter(popUp, popUpButton) {
+  popUp.style.maxWidth = '';
+  const popUpButtonPosition = popUpButton.getBoundingClientRect();
+  const popUpPosition = popUp.getBoundingClientRect();
+  const minimalDistance = windowWidth > 350 ? 10 : 50;
+  const popUpWidthWithDistance = popUpPosition.width + minimalDistance * 2;
+  popUp.style.left = (function() {
+    const forButtonHorizontalCenter = popUpButtonPosition.x + popUpButtonPosition.width / 2 - popUpWidthWithDistance / 2;
+    const spaceBetweenPopUpAndWindowOnRight = windowWidth - forButtonHorizontalCenter - popUpWidthWithDistance;
+    const spaceBetweenPopUpAndWindowOnLeft = forButtonHorizontalCenter;
+    const goodOnRight = spaceBetweenPopUpAndWindowOnRight >= 0;
+    const goodOnLeft = spaceBetweenPopUpAndWindowOnLeft >= 0;
+    if (popUpWidthWithDistance >= windowWidth) {
+      popUp.style.maxWidth = (windowWidth - minimalDistance * 2) + 'px';
+      return minimalDistance;
+    }
+    if (!goodOnRight) {
+      return windowWidth - popUpWidthWithDistance;
+    }
+    if (!goodOnLeft) {
+      return minimalDistance;
+    }
+    return forButtonHorizontalCenter;
+  }()) + 'px';
+  popUp.style.top = (popUpButtonPosition.y + popUpButtonPosition.height) + 'px';
 }
 
 function hidePopUp(popUp, popUpButton = undefined) {
