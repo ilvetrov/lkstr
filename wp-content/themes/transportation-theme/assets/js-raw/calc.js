@@ -414,15 +414,13 @@ function sendingCityOperations(cityElement, scriptOwner = false) {
     outputAddressTo.innerHTML = 'Прибытие';
   }
   if (!scriptOwner) {
-    insertValuesToList([
-      {
-        values : values,
-        markedValues : getRecipientCitiesNotFor(sendingCity),
-        list : recipientCitiesListElement,
-        callback : recipientCityOperations,
-        markedTitle : 'Нет доставки из города ' + sendingCity
-      }
-    ]);
+    insertValuesToList({
+      values : values,
+      markedValues : getRecipientCitiesNotFor(sendingCity),
+      list : recipientCitiesListElement,
+      callback : recipientCityOperations,
+      markedTitle : 'Нет доставки из города ' + sendingCity
+    });
   }
   doFormula();
 }
@@ -437,128 +435,28 @@ function recipientCityOperations(cityElement, scriptOwner = false) {
     outputAddressFrom.innerHTML = 'Отправление';
   }
   if (!scriptOwner) {
-    insertValuesToList([
-      {
-        values : values,
-        markedValues : getSendingCitiesNotFor(recipientCity),
-        list : sendingCitiesListElement,
-        callback : sendingCityOperations,
-        markedTitle : 'Нет доставки в город ' + recipientCity
-      }
-    ]);
+    insertValuesToList({
+      values : values,
+      markedValues : getSendingCitiesNotFor(recipientCity),
+      list : sendingCitiesListElement,
+      callback : sendingCityOperations,
+      markedTitle : 'Нет доставки в город ' + recipientCity
+    });
   }
   doFormula();
 }
 
 if (typeof calcFormula != 'undefined') {
-  insertValuesToList([
-    {
-      values : getSendingCities(),
-      list : sendingCitiesListElement,
-      callback : sendingCityOperations
-    },
-    {
-      values : getRecipientCities(),
-      list : recipientCitiesListElement,
-      callback : recipientCityOperations
-    }
-  ], 'init');
-}
-
-function insertValuesToList(allValues, init = false) {
-  for (let i = 0; i < allValues.length; i++) {
-    const valuesProperties = allValues[i],
-          values = valuesProperties.values,
-          markedValues = valuesProperties.markedValues || [],
-          markedTitle = valuesProperties.markedTitle || 'Нет доставки',
-          list = valuesProperties.list,
-          valueOutput = list.getElementsByClassName('js-calc-list-output')[0],
-          itemsOutput = list.getElementsByClassName('js-calc-list-items')[0];
-    if (!init && values.length > 0 && values.indexOf(valueOutput.innerText) == -1) {
-      deactivateListButton(list);
-      valueOutput.innerHTML = '';
-    }
-    if (init && values.length == 1) {
-      itemsOutput.innerHTML = '';
-      const value = values[0],
-            newElement = document.createElement('div');
-      newElement.classList.add('calc__list-item');
-      newElement.classList.add('js-calc-list-item');
-      // newElement.setAttribute('onclick', `${valuesProperties.callback}(this);`);
-      newElement.innerHTML = value;
-
-      let elementOnPage = itemsOutput.appendChild(newElement);
-      elementOnPage.addEventListener('click', () => {
-        valuesProperties.callback(elementOnPage);
-        selectItemInList(list);
-      });
-      setTimeout(() => {
-        valuesProperties.callback(elementOnPage, 'scriptOwner');
-        selectItemInList(list);
-        list.classList.add('calc__list_one-item');
-      }, 1);
-      if (markedValues.length > 0) {
-        itemsOutput.appendChild(document.createElement('hr'));
-        for (let valuesIteration = 0; valuesIteration < markedValues.length; valuesIteration++) {
-          const value = markedValues[valuesIteration],
-                newElement = document.createElement('div');
-          newElement.classList.add('calc__list-item');
-          newElement.classList.add('calc__list-item_marked');
-          newElement.classList.add('js-calc-list-item');
-          newElement.setAttribute('title', markedTitle);
-          // newElement.setAttribute('onclick', `${valuesProperties.callback}(this);`);
-          newElement.innerHTML = value;
-  
-          let elementOnPage = itemsOutput.appendChild(newElement);
-          elementOnPage.addEventListener('click', () => {
-            valuesProperties.callback(elementOnPage);
-            selectItemInList(list);
-          });
-        }
-      }
-    } else {
-      if (list.classList.contains('calc__list_one-item') && (values.indexOf(valueOutput.innerText) == -1 || values.length > 1)) {
-        list.classList.remove('calc__list_one-item');
-      }
-      if (init || (itemsOutput.innerHTML.indexOf(valueOutput.innerHTML) == -1)) {
-        valueOutput.innerHTML = '';
-      }
-      itemsOutput.innerHTML = '';
-      for (let valuesIteration = 0; valuesIteration < values.length; valuesIteration++) {
-        const value = values[valuesIteration],
-              newElement = document.createElement('div');
-        newElement.classList.add('calc__list-item');
-        newElement.classList.add('js-calc-list-item');
-        // newElement.setAttribute('onclick', `${valuesProperties.callback}(this);`);
-        newElement.innerHTML = value;
-
-        let elementOnPage = itemsOutput.appendChild(newElement);
-        elementOnPage.addEventListener('click', () => {
-          valuesProperties.callback(elementOnPage);
-          selectItemInList(list);
-        });
-      }
-      if (markedValues.length > 0) {
-        itemsOutput.appendChild(document.createElement('hr'));
-        for (let valuesIteration = 0; valuesIteration < markedValues.length; valuesIteration++) {
-          const value = markedValues[valuesIteration],
-                newElement = document.createElement('div');
-          newElement.classList.add('calc__list-item');
-          newElement.classList.add('calc__list-item_marked');
-          newElement.classList.add('js-calc-list-item');
-          newElement.setAttribute('title', markedTitle);
-          // newElement.setAttribute('onclick', `${valuesProperties.callback}(this);`);
-          newElement.innerHTML = value;
-  
-          let elementOnPage = itemsOutput.appendChild(newElement);
-          elementOnPage.addEventListener('click', () => {
-            valuesProperties.callback(elementOnPage);
-            selectItemInList(list);
-          });
-        }
-      }
-    }
-  }
+  insertValuesToList({
+    values : getSendingCities(),
+    list : sendingCitiesListElement,
+    callback : sendingCityOperations
+  }, 'init');
+  insertValuesToList({
+    values : getRecipientCities(),
+    list : recipientCitiesListElement,
+    callback : recipientCityOperations
+  }, 'init');
 }
 
 const inputs = document.getElementsByClassName('js-calc-input');
@@ -606,141 +504,5 @@ for (let inputIteration = 0; inputIteration < inputs.length; inputIteration++) {
         inputValueSign.classList.add('hidden');
       }
     });
-  }
-}
-
-
-const lists = document.getElementsByClassName('js-calc-list'),
-      listsBackground = document.getElementsByClassName('js-calc-lists-background')[0];
-
-let listCanToggle = true;
-for (let listIteration = 0; listIteration < lists.length; listIteration++) {
-  const list = lists[listIteration],
-        listButton = list.getElementsByClassName('js-calc-list-button')[0],
-        items = list.getElementsByClassName('js-calc-list-item'),
-        input = list.getElementsByClassName('js-calc-list-items-search')[0];
-  
-  listButton.addEventListener('click', () => {
-    if (listCanToggle && !list.classList.contains('calc__list_one-item')) {
-      if (list.classList.contains('list-disabled')) {
-        list.classList.remove('list-disabled');
-        setTimeout(() => {
-          list.classList.remove('collapsed');
-        }, 1);
-        showCalcListsBackground();
-        if (window.innerWidth > 768) {
-          input.focus();
-        }
-      } else {
-        closeItemsList(list);
-      }
-    }
-  });
-  document.addEventListener('click', e => {
-    if (!list.classList.contains('collapsed') && checkThatCurrentElementExistsOutside(listButton, e.target) && document.activeElement.tagName != 'INPUT' && !e.target.classList.contains('calc__list-items-search')) {
-      closeItemsList(list);
-    }
-  });
-  listsBackground.addEventListener('click', () => {
-    if (!list.classList.contains('collapsed')) {
-      closeItemsList(list);
-    }
-  });
-  document.body.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !list.classList.contains('collapsed')) {
-      closeItemsList(list);
-    }
-  });
-  document.body.addEventListener('keyup', e => {
-    let activeItem;
-    if (
-      e.key === 'Enter'
-      && !list.classList.contains('collapsed')
-      && Array.from(items).filter(item => {
-        if (!item.classList.contains('disabled')) {
-          activeItem = item;
-          return true;
-        } else {
-          return false;
-        }
-      }).length == 1
-    ) {
-      // selectItemInList(list);
-      activeItem.click();
-    }
-  });
-}
-
-function deactivateListButton(list) {
-  const button = list.getElementsByClassName('js-calc-list-button')[0];
-  
-  button.classList.add('deactivated');
-}
-function selectItemInList(list) {
-  const items = list.getElementsByClassName('js-calc-list-item'),
-        searchInput = list.getElementsByClassName('js-calc-list-items-search')[0],
-        button = list.getElementsByClassName('js-calc-list-button')[0];
-  
-  button.classList.remove('deactivated');
-  closeItemsList(list);
-  setTimeout(() => {
-    searchInput.value = '';
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      item.classList.remove('disabled');
-    }
-  }, 250);
-}
-function closeItemsList(list) {
-  listCanToggle = false;
-  list.classList.add('collapsed');
-  setTimeout(() => {
-    list.classList.add('list-disabled');
-  }, 200);
-  hideCalcListsBackground();
-}
-
-function showCalcListsBackground() {
-  listsBackground.classList.remove('disabled');
-  setTimeout(() => {
-    listsBackground.classList.remove('hidden');
-  }, 1);
-}
-function hideCalcListsBackground() {
-  listsBackground.classList.add('hidden');
-  setTimeout(() => {
-    listsBackground.classList.add('disabled');
-    listCanToggle = true;
-  }, 300);
-}
-
-const calcSearchInputs = document.getElementsByClassName('js-calc-list-items-search');
-for (let calcSearchInputIteration = 0; calcSearchInputIteration < calcSearchInputs.length; calcSearchInputIteration++) {
-  const input = calcSearchInputs[calcSearchInputIteration];
-  input.addEventListener('input', () => {
-    searchCity(input);
-  });
-}
-
-function searchCity(searchElement) {
-  const searchValue = searchElement.value.trim(),
-        items = searchElement.parentElement.parentElement.getElementsByClassName('js-calc-list-item');
-  
-  if (searchValue != '') {
-    const regExpForSearchValue = new RegExp('(^|- *)' + searchValue, 'i');
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i],
-            cityName = item.innerText;
-      if (!cityName.match(regExpForSearchValue)) {
-        item.classList.add('disabled');
-      } else {
-        item.classList.remove('disabled');
-      }
-    }
-  } else {
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      item.classList.remove('disabled');
-    }
   }
 }

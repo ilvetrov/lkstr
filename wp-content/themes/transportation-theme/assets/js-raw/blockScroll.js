@@ -1,5 +1,5 @@
 let advancedElementsForScrollBlocking = document.getElementsByClassName('js-for-replace-scrollbar'),
-    lastScrollBarWidth = getScrollBarWidth();
+    lastScrollBarWidth = getScrollBarWidth(false);
 
 function blockScroll() {
   if (checkScrollbar()) {
@@ -41,10 +41,10 @@ function blockScrollBarIn(element, cached = false) {
 function checkScrollbar() {
   return window.innerWidth > document.body.clientWidth;
 }
-function getScrollBarWidth() {
+function getScrollBarWidth(updateLast = true) {
   try {
     const scrollBarWidth = window.innerWidth - document.body.clientWidth;
-    lastScrollBarWidth = scrollBarWidth;
+    if (updateLast) lastScrollBarWidth = scrollBarWidth;
     return scrollBarWidth;
   } catch (error) {
     console.log(error);

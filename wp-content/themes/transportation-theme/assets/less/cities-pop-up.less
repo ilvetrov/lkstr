@@ -1,0 +1,23 @@
+.cities-pop-up {
+  z-index: 12;
+  pointer-events: none;
+  position: fixed;
+
+  &__wrap {
+    padding-top: 6px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  &__menu {
+    pointer-events: all;
+  }
+
+  &.hidden & {
+    &__list {
+      opacity: 0;
+      transform: translateY(-25px);
+      pointer-events: none;
+    }
+  }
+}

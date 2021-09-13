@@ -1,4 +1,6 @@
 function checkThatCurrentElementExistsOutside(objectOutsideWhichWeAreChecking, currentElement) {
+  if (objectOutsideWhichWeAreChecking == currentElement) return false;
+
   let currentElementExistsInObjectOutsideWhichWeAreChecking,
       childElementsOfObjectOutsideWhichWeAreChecking = Array.from(objectOutsideWhichWeAreChecking.getElementsByTagName('*')),
       childElementsOfObjectOutsideWhichWeAreCheckingLength = childElementsOfObjectOutsideWhichWeAreChecking.length;
@@ -11,10 +13,7 @@ function checkThatCurrentElementExistsOutside(objectOutsideWhichWeAreChecking, c
       currentElementExistsInObjectOutsideWhichWeAreChecking = false;
     }
   }
-  if (
-    objectOutsideWhichWeAreChecking != currentElement &&
-    !currentElementExistsInObjectOutsideWhichWeAreChecking
-  ) {
+  if (!currentElementExistsInObjectOutsideWhichWeAreChecking) {
     return true;
   } else {
     return false;

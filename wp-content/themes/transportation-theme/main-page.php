@@ -368,45 +368,45 @@ get_header();
               </div>
               <!-- /.calc__left-side-ornament -->
               <div class="calc__left-side-wrap">
-                <div class="calc__list js-calc-list collapsed list-disabled js-calc-sending-cities <?php if (count(getSendingCitiesFromTableArray(get_field('calc-cities')['body'])) == 1) { echo 'calc__list_one-item'; } ?>">
-                  <div class="calc__input calc__input-view calc__input_list deactivated js-calc-list-button">
+                <div class="calc__list js-list-menu collapsed list-disabled js-calc-sending-cities <?php if (count(getSendingCitiesFromTableArray(get_field('calc-cities')['body'])) == 1) { echo 'list-menu_one-item'; } ?>">
+                  <div class="calc__input calc__input-view calc__input_list deactivated js-list-menu-button">
                     <div class="calc__input-content calc__input-view-content">
                       <div class="calc__input-placeholder calc__input-view-placeholder">Отправление</div>
-                      <div class="calc__list-output calc__input-value calc__input-view-value js-calc-list-output js-calc-sending-city-output"></div>
+                      <div class="calc__list-output calc__input-value calc__input-view-value js-calc-list-output js-list-menu-output js-calc-sending-city-output"></div>
                     </div>
                     <div class="calc__list-arrow-wrap">
                       <img <?php imgAsyncSrc('list-arrow.svg'); ?> alt="Выбрать" class="calc__list-arrow">
                     </div>
                   </div>
                   <!-- /.calc__input -->
-                  <div class="calc__list-items <?php if (get_field('calc-list-own-background')) { echo 'calc__list-items_with-background'; } ?>">
-                    <div class="calc__list-items-search">
-                      <input type="text" class="calc__list-items-search-input js-calc-list-items-search" placeholder="Поиск города...">
+                  <div class="list-menu calc__list-items <?php if (get_field('calc-list-own-background')) { echo 'list-menu_with-background'; } ?>">
+                    <div class="list-menu__search">
+                      <input type="text" class="list-menu__search-input js-list-menu-items-search" placeholder="Поиск города...">
                     </div>
-                    <div class="js-calc-list-items"></div>
+                    <div class="js-list-menu-items"></div>
                   </div>
-                  <!-- /.calc__list-items -->
+                  <!-- /.list-menu -->
                   <img <?php imgAsyncSrc('circle-arrow.svg'); ?> alt="Выберите города" class="calc__circle-arrow">
                 </div>
                 <!-- /.calc__list -->
-                <div class="calc__list js-calc-list collapsed list-disabled js-calc-recipient-cities">
-                  <div class="calc__input calc__input-view calc__input_list deactivated js-calc-list-button">
+                <div class="calc__list js-list-menu collapsed list-disabled js-calc-recipient-cities">
+                  <div class="calc__input calc__input-view calc__input_list deactivated js-list-menu-button">
                     <div class="calc__input-content calc__input-view-content">
                       <div class="calc__input-placeholder calc__input-view-placeholder">Прибытие</div>
-                      <div class="calc__list-output calc__input-value calc__input-view-value js-calc-list-output js-calc-recipient-city-output"></div>
+                      <div class="calc__list-output calc__input-value calc__input-view-value js-calc-list-output js-list-menu-output js-calc-recipient-city-output"></div>
                     </div>
                     <div class="calc__list-arrow-wrap">
                       <img <?php imgAsyncSrc('list-arrow.svg'); ?> alt="Выбрать" class="calc__list-arrow">
                     </div>
                   </div>
                   <!-- /.calc__input -->
-                  <div class="calc__list-items <?php if (get_field('calc-list-own-background')) { echo 'calc__list-items_with-background'; } ?>">
-                    <div class="calc__list-items-search">
-                      <input type="text" class="calc__list-items-search-input js-calc-list-items-search" placeholder="Поиск города...">
+                  <div class="list-menu calc__list-items <?php if (get_field('calc-list-own-background')) { echo 'list-menu_with-background'; } ?>">
+                    <div class="list-menu__search">
+                      <input type="text" class="list-menu__search-input js-list-menu-items-search" placeholder="Поиск города...">
                     </div>
-                    <div class="calc__list-items-output js-calc-list-items"></div>
+                    <div class="list-menu__output js-list-menu-items"></div>
                   </div>
-                  <!-- /.calc__list-items -->
+                  <!-- /.list-menu -->
                 </div>
                 <!-- /.calc__list -->
                 <label class="calc__input calc__input-view js-calc-input deactivated" for="calc-volume">
@@ -590,7 +590,7 @@ get_header();
   </section>
   <!-- /.contact-screen -->
 
-  <div class="calc-lists-background hidden disabled js-calc-lists-background"></div>
+  <div class="list-menu-background hidden disabled js-list-menu-background"></div>
 </main>
 <!-- /.site-main -->
 

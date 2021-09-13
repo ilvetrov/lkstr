@@ -255,111 +255,10 @@
       transform: rotate(180deg);
       transition: transform .2s ease-in;
     }
-    &-items {
-      width: 250px;
-      max-height: 375px;
-      position: absolute;
-      transform: translateY(0);
-      transform-origin: top;
-      opacity: 1;
-      transition: transform .2s ease-out, opacity .2s ease-out;
-      overflow: auto;
-      z-index: 9;
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-bottom: 10px;
-      left: -10px;
 
-      &-title {
-        font-weight: 700;
-        font-size: 20px;
-        font-family: 'Montserrat', sans-serif;
-      }
-      &-search {
-        padding-left: 30px;
-        padding-right: 30px;
-        padding-top: 15px;
-        padding-bottom: 15px;
-        margin-top: 20px;
-        margin-bottom: 15px;
-        background-color: #fff;
-        
-        &-input {
-          border: none;
-          background-color: inherit;
-          padding: 0;
-          width: 100%;
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 500;
-          font-size: 15px;
-        }
-      }
-      &::-webkit-scrollbar {
+    &.list-disabled {
+      .list-menu {
         display: none;
-        width: 0px;
-        background: transparent;
-        max-width: 0px;
-      }
-      hr {
-        border: 0.5px #efefef solid;
-        
-      }
-
-      &_with-background {
-        background: #fff;
-        
-        .calc__list-item {
-          background-color: #ebebeb;
-
-          &:hover, &:focus, &:active {
-            background-color: #e3e3e3;
-          }
-        }
-      }
-      &_with-background & {
-        &-search {
-          margin-top: 15px;
-          background-color:  #ebebeb;
-        }
-      }
-
-      &.list-disabled & {
-        &-items {
-          display: none;
-        }
-      }
-    }
-    &-item {
-      font-family: 'Montserrat', sans-serif;
-      padding-left: 30px;
-      padding-right: 30px;
-      padding-top: 20px;
-      padding-bottom: 20px;
-      margin-top: 10px;
-      font-size: 15px;
-      font-weight: 500;
-      cursor: pointer;
-      background-color: #f3f3f3;  
-      transition: background-color .2s ease-out;  
-      word-break: break-word;
-      line-height: 1.28;
-
-      &_marked {
-        display: flex;
-        justify-content: space-between;
-        color: #676767;
-
-        &::after {
-          content: '—';
-        }
-
-        &:first-child {
-          margin-top: 9px;
-        }
-      }
-      
-      &:hover, &:focus, &:active {
-        background-color: #fff;
       }
     }
 
@@ -491,22 +390,6 @@
     }
   }
 }
-.calc-lists-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, .3);
-  z-index: 8;
-  opacity: 1;
-  transition: opacity .2s ease-out;
-
-  &.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
-}
 
 @keyframes planetAnimation {
   0% {
@@ -519,17 +402,6 @@
     transform: scale(1) rotate(0deg);
   }
 }
-
-// @media (max-width: 1700px) and (min-width: 1286px) {
-//   .calc-screen {
-//     &__planet {
-//       width: 41vw;
-//       &-shadow {
-//         width: 16vw;
-//       }
-//     }
-//   }
-// }
 
 @media (max-width: 1700px) {
   .calc-screen {

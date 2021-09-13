@@ -71,5 +71,6 @@
 	</header><!-- #masthead -->
 	<?php
 	require get_template_directory() . '/template-parts/header-menu.php';
+	require get_template_directory() . '/template-parts/cities-menu.php';
 	require get_template_directory() . '/template-parts/call-pop-up.php';
 	?>

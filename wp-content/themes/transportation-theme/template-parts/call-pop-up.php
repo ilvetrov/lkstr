@@ -1,4 +1,4 @@
-<div class="pop-up hidden disabled" data-pop-up="call">
+<div class="call-pop-up-wrap pop-up hidden disabled" data-pop-up="call">
   <div class="container-size">
     <div class="pop-up__content">
 
