@@ -251,7 +251,7 @@ function register_post_types()
 		register_post_type($city['employee_name'], [
 			'labels' => [
 				'menu_name' => $city['name'],
-				'name' => $city['name'] . ' • Сотрудники',
+				'name' => 'Сотрудники • ' . $city['name'] . ' • code: ' . $city['code_name'] . '',
 				'singular_name' => 'Сотрудник • ' . $city['name'],
 				'add_new' => 'Добавить нового',
 				'add_new_item' => 'Добавить нового сотрудника',
