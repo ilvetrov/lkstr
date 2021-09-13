@@ -58,14 +58,65 @@ function crb_attach_cities_options()
         ])
     ])
   ])
+  ->add_tab('Город по умолчанию', [
+    Field::make('select', 'default_city', 'Город по умолчанию')
+      ->set_help_text('Если у других городов нет какого-то значения ниже (телефона, карты и т.д.), то будет выводиться значение из данных этого города.')
+      ->set_default_value(reset(get_cities_names()))
+      ->set_options(get_cities_names()),
+  ])
+  ->add_tab('Сотрудники', [
+    Field::make('checkbox', 'general_employees_is_shown', 'Выводить общих сотрудников')
+      ->set_help_text('Если установлено, то будут выводиться сотрудники, не привязанные к какому-либо городу. Их поведение настраивается ниже.')
+      ->set_default_value(true),
+    Field::make('checkbox', 'general_employees_is_separated', 'Выводить общих сотрудников отдельно')
+      ->set_help_text('Если установлено, то появляется отдельный "город" в карусели сотрудников: "Общие". Надпись можно сменить ниже. <br>Если не установлено, то выводит общих сотрудников в каждой карусели. <br>Рекомендуется отдельный вывод или же не выводить вовсе.')
+      ->set_default_value(true)
+      ->set_conditional_logic([
+        [
+          'field' => 'general_employees_is_shown',
+          'value' => true
+        ],
+      ]),
+    Field::make('text', 'general_employees_separated_text', 'Заголовок в карусели')
+      ->set_help_text('Обозначает общих сотрудников. По нажатию появится выбор городов, как и без сотрудников.')
+      ->set_default_value('Общие')
+      ->set_conditional_logic([
+        [
+          'field' => 'general_employees_is_shown',
+          'value' => true
+        ],
+        [
+          'field' => 'general_employees_is_separated',
+          'value' => true
+        ],
+      ]),
+    Field::make('select', 'general_employees_order', 'Место в карусели')
+      ->set_help_text('Если в общей карусели мало людей (например, только администрация), то попробуйте "Начало". Учитывайте, что на телефонах люди видят только одного сотрудника за раз. <br>При варианте "Случайно" игнорируется порядок, задаваемый вами в списке сотрудников.')
+      ->set_default_value('start')
+      ->set_options([
+        'start' => 'Начало',
+        'end' => 'Конец',
+        'random' => 'Случайно',
+      ])
+      ->set_conditional_logic([
+        [
+          'field' => 'general_employees_is_shown',
+          'value' => true
+        ],
+        [
+          'field' => 'general_employees_is_separated',
+          'value' => false
+        ],
+      ]),
+  ])
   ->add_tab('Общие данные', [
-    Field::make('text', 'bank-name', 'Банк')
+    Field::make('text', 'bank_name', 'Банк')
       ->set_help_text('Банк, который будет показан, например, внизу сайта.'),
-    Field::make('text', 'bank-account-number', 'Расчётный счёт')
+    Field::make('text', 'bank_account_number', 'Расчётный счёт')
       ->set_help_text('Показывается, например, внизу сайта.'),
-    Field::make('text', 'bank-correspondent-number', 'Корреспондентский счёт')
+    Field::make('text', 'bank_correspondent_number', 'Корреспондентский счёт')
       ->set_help_text('Показывается, например, внизу сайта.'),
-    Field::make('text', 'bank-bik', 'БИК банка')
+    Field::make('text', 'bank_bik', 'БИК банка')
       ->set_help_text('Показывается, например, внизу сайта.'),
   ]);
 

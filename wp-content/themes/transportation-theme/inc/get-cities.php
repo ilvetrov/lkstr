@@ -15,3 +15,13 @@ function get_cities($secure = false)
   $cached_cities = $cities;
   return $cities;
 }
+
+function get_cities_names($secure = false)
+{
+  $cities = get_cities($secure);
+  $cities_names = [];
+  foreach ($cities as $city) {
+    $cities_names[$city['code_name']] = $city['name'];
+  }
+  return $cities_names;
+}
