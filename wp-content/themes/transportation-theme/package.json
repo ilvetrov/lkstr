@@ -1,19 +1,20 @@
 {
   "private": true,
   "scripts": {
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "build": "gulp build"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
-    "gulp-cached": "^1.1.1",
     "gulp-chmod": "^3.0.0",
     "gulp-clean-css": "^3.10.0",
     "gulp-concat": "^2.6.1",
     "gulp-concat-css": "^3.1.0",
     "gulp-less": "^4.0.1",
+    "gulp-memory-cache": "^0.3.0",
     "gulp-minify": "^3.1.0",
     "gulp-plumber": "^1.2.0",
     "gulp-uglify-es": "^1.0.4",

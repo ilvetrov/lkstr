@@ -8,7 +8,8 @@ const plumber = require('gulp-plumber');
 const babel = require('gulp-babel');
 const fs = require('fs');
 const chmod = require('gulp-chmod');
-const cache = require('gulp-cached');
+// const cache = require('gulp-cached');
+const cache = require('gulp-memory-cache');
 
 const pathPrefix = '';
 
@@ -18,12 +19,20 @@ gulp.task('default', function () {
 	console.log('Hello, Gulp!');
 });
 
-gulp.task('less', function() {
+gulp.task('less-dev', function() {
+	return gulp.src(pathPrefix + 'assets/less/*.less', {
+				since: cache.lastMtime('less-dev')
+			})
+			.pipe(plumber())
+			.pipe(cache('less-dev', true))
+			.pipe(concat('styles.css'))
+			.pipe(less())
+			.pipe(gulp.dest(pathPrefix + 'assets/css'));
+});
+
+gulp.task('minify-less', function() {
 	return gulp.src(pathPrefix + 'assets/less/*.less')
 			.pipe(plumber())
-			.pipe(cache('less', {
-				optimizeMemory: true
-			}))
 			.pipe(concat('styles.css'))
 			.pipe(less())
 			.pipe(autoprefixer())
@@ -31,12 +40,20 @@ gulp.task('less', function() {
 			.pipe(gulp.dest(pathPrefix + 'assets/css'));
 });
 
-gulp.task('js', function() {
+gulp.task('js-dev', function() {
+	return gulp.src(pathPrefix + 'assets/js-raw/*.js', {
+				since: cache.lastMtime('js-dev')
+			})
+			.pipe(plumber())
+			.pipe(cache('js-dev', true))
+			.pipe(concat('scripts.js'))
+			.pipe(chmod(0664))
+			.pipe(gulp.dest(pathPrefix + 'assets/js'));
+});
+
+gulp.task('minify-js', function() {
 	return gulp.src(pathPrefix + 'assets/js-raw/*.js')
 			.pipe(plumber())
-			.pipe(cache('scripts', {
-				optimizeMemory: true
-			}))
 			.pipe(concat('scripts.js'))
 			.pipe(babel({
 				presets: ['@babel/env']
@@ -130,12 +147,12 @@ function getLessBlocks(path) {
 
 gulp.task('watch', function() {
 	gulp.parallel(
-		'js',
-		'less'
+		'js-dev',
+		'less-dev'
 	)();
 
-	gulp.watch(pathPrefix + 'assets/js-raw/*.js').on('change', gulp.series('js'));
-	gulp.watch(pathPrefix + 'assets/less/*.less').on('change', gulp.series('less'));
+	gulp.watch(pathPrefix + 'assets/js-raw/*.js', gulp.series('js-dev')).on('change', cache.update('js-dev'));
+	gulp.watch(pathPrefix + 'assets/less/*.less', gulp.series('less-dev')).on('change', cache.update('less-dev'));
 
 	gulp.watch(pathPrefix + 'assets/js-raw/separately/*.js').on('change', gulp.series('separately-js'));
 
@@ -150,4 +167,11 @@ gulp.task('watch', function() {
 	});
 
 	gulp.watch(pathPrefix + 'assets/less/separately/*.less').on('change', gulp.series('separately-less'));
+});
+
+gulp.task('build', function() {
+	gulp.parallel(
+		'minify-js',
+		'minify-less',
+	)();
 });
