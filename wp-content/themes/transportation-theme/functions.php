@@ -177,6 +177,10 @@ require get_template_directory() . '/inc/customizer.php';
  */
 require get_template_directory() . '/inc/img-blanks.php';
 
+require get_template_directory() . '/inc/carbon-fields/index.php';
+
+require get_template_directory() . '/inc/get-cities.php';
+
 require get_template_directory() . '/inc/acf-to-admin-menu.php';
 
 require get_template_directory() . '/inc/lead-to-mail.php';
@@ -210,13 +214,16 @@ if (is_admin()) {
 
 function register_post_types()
 {
+	$cities = get_cities();
+	
 	register_post_type('employee', [
 		'labels' => [
-			'name' => 'Сотрудники',
-			'singular_name' => 'Сотрудник',
-			'add_new' => 'Добавить нового',
-			'add_new_item' => 'Добавить нового сотрудника',
-			'edit_item' => 'Редактировать информацию о сотруднике',
+			'menu_name' => 'Сотрудники',
+			'name' => 'Сотрудники (все города)',
+			'singular_name' => 'Сотрудник (все города)',
+			'add_new' => 'Добавить нового для всех городов',
+			'add_new_item' => 'Добавить нового сотрудника (все города)',
+			'edit_item' => 'Редактировать информацию о сотруднике (для всех городов)',
 			'new_item' => 'Новый сотрудник',
 			'view_item' => 'Посмотреть информацию о сотруднике',
 			'search_items' => 'Найти сотрудника',
@@ -226,7 +233,7 @@ function register_post_types()
 		'description' => 'Сотрудники компании. Отображаются в блоке «Наша команда»',
 		'public' => false,
 		'show_ui' => true,
-		'menu_position' => 20,
+		'menu_position' => 22,
 		'menu_icon' => 'dashicons-groups',
 		'supports' => [
 			'title',
@@ -239,6 +246,38 @@ function register_post_types()
 		'query_var' => false,
 		'delete_with_user' => false,
 	]);
+
+	foreach ($cities as $city) {
+		register_post_type($city['employee_name'], [
+			'labels' => [
+				'menu_name' => $city['name'],
+				'name' => $city['name'] . ' • Сотрудники',
+				'singular_name' => 'Сотрудник • ' . $city['name'],
+				'add_new' => 'Добавить нового',
+				'add_new_item' => 'Добавить нового сотрудника',
+				'edit_item' => 'Редактировать информацию о сотруднике • ' . $city['name'],
+				'new_item' => 'Новый сотрудник города ' . $city['name'] . '',
+				'view_item' => 'Посмотреть информацию о сотруднике города ' . $city['name'] . '',
+				'search_items' => 'Найти сотрудника города ' . $city['name'] . '',
+				'not_found' => 'Сотрудники города ' . $city['name'] . ' не были найдены',
+				'not_found_in_trash' => 'Сотрудники города ' . $city['name'] . ' не были найдены в корзине',
+			],
+			'description' => 'Сотрудники компании города ' . $city['name'] . '. Отображаются в блоке «Наша команда» при выборе своего города',
+			'public' => false,
+			'show_ui' => true,
+			'show_in_menu' => 'edit.php?post_type=employee',
+			'supports' => [
+				'title',
+				'thumbnail',
+				'custom-fields',
+				'revisions',
+			],
+			'has_archive' => true,
+			'rewrite' => false,
+			'query_var' => false,
+			'delete_with_user' => false,
+		]);
+	}
 }
 add_action('init', 'register_post_types');
 
