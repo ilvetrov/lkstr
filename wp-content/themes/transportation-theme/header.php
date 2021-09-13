@@ -46,10 +46,21 @@
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.svg" alt="<?php bloginfo( 'name' ); ?>" class="site-header__logo">
 				</a>
 				<!-- /.site-header__logo -->
-				<a href="tel:<?php echo preg_replace("/[^0-9+]/", "", esc_html(get_global_field('company-phone'))); ?>" class="site-header__phone site-header__side">
+
+				<div class="site-header__phone site-header__side">
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/img/phone.svg" alt="Наш номер телефона" class="site-header__phone-icon">
-					<span class="site-header__phone-text"><?php echo esc_html(get_global_field('company-phone')); ?></span>
-				</a>
+					<div class="phone-block site-header__phone-block">
+						<div class="phone-block__city-button">
+							<?php require get_template_directory() . '/template-parts/city-button.php'; ?>
+						</div>
+						<!-- /.phone-block__city-button -->
+						<a href="tel:<?php echo preg_replace("/[^0-9+]/", "", esc_html(get_global_field('company-phone'))); ?>" class="phone not-link-style">
+							<span class="phone__text"><?php echo esc_html(get_global_field('company-phone')); ?></span>
+						</a>
+						<!-- /.phone -->
+					</div>
+					<!-- /.phone-block -->
+				</div>
 				<!-- /.site-header__phone -->
 				<div class="site-header__void-mobile site-header__side"></div>
 			</div>
