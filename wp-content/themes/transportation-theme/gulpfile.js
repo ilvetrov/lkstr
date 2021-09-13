@@ -169,9 +169,9 @@ gulp.task('watch', function() {
 	gulp.watch(pathPrefix + 'assets/less/separately/*.less').on('change', gulp.series('separately-less'));
 });
 
-gulp.task('build', function() {
+gulp.task('build', function(done) {
 	gulp.parallel(
 		'minify-js',
 		'minify-less',
-	)();
+	)(done);
 });
