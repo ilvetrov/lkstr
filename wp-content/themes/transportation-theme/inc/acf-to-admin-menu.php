@@ -41,9 +41,11 @@ function higlight_custom_settings_page($file) {
 
   $settings_page = get_page_by_path("site-settings", NULL, "page")->ID;
 
-  $post = (int) $_GET["post"];
-  if ($pagenow === "post.php" && $post === $settings_page) {
-    $file = "post.php?post=$settings_page&action=edit";
+  if (!empty($_GET["post"])) {
+    $post = (int) $_GET["post"];
+    if ($pagenow === "post.php" && $post === $settings_page) {
+      $file = "post.php?post=$settings_page&action=edit";
+    }
   }
   return $file;
 }

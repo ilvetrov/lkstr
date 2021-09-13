@@ -201,7 +201,10 @@ add_image_size('service-size-110x100', 110, 100, true);
 add_image_size('employee-size-272x200', 272, 200, true);
 
 if (is_admin()) {
-	add_filter('filesystem_method', create_function('$a', 'return "direct";' ));
+	add_filter('filesystem_method', function($a)
+	{
+		return "direct";
+	});
 	define( 'FS_CHMOD_DIR', 0764 );
 }
 
