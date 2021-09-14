@@ -27,13 +27,12 @@ gulp.task('default', function () {
 });
 
 gulp.task('less-dev', function() {
-	return gulp.src(pathPrefix + 'assets/less/*.less', {
-				since: cache.lastMtime('less-dev')
-			})
+	return gulp.src(pathPrefix + 'assets/less/*.less')
 			.pipe(plumber())
-			.pipe(cache('less-dev', true))
+			// .pipe(cache('less-dev', true))
 			.pipe(concat('styles.css'))
 			.pipe(less())
+			.pipe(setNewTime())
 			.pipe(gulp.dest(pathPrefix + 'assets/css'));
 });
 
@@ -49,13 +48,12 @@ gulp.task('minify-less', function() {
 });
 
 gulp.task('js-dev', function() {
-	return gulp.src(pathPrefix + 'assets/js-raw/*.js', {
-				since: cache.lastMtime('js-dev')
-			})
+	return gulp.src(pathPrefix + 'assets/js-raw/*.js')
 			.pipe(plumber())
-			.pipe(cache('js-dev', true))
+			// .pipe(cache('js-dev', true))
 			.pipe(concat('scripts.js'))
 			.pipe(chmod(0664))
+			.pipe(setNewTime())
 			.pipe(gulp.dest(pathPrefix + 'assets/js'));
 });
 
@@ -80,6 +78,7 @@ gulp.task('separately-js', function() {
 			}))
 			.pipe(uglify())
 			.pipe(chmod(0664))
+			.pipe(setNewTime())
 			.pipe(gulp.dest(pathPrefix + 'assets/js'));
 });
 
@@ -89,6 +88,7 @@ gulp.task('separately-less', function() {
 			.pipe(less())
 			.pipe(autoprefixer())
 			.pipe(cleanCSS())
+			.pipe(setNewTime())
 			.pipe(gulp.dest(pathPrefix + 'assets/css'));
 });
 
@@ -108,6 +108,7 @@ gulp.task('blocks-js', function() {
 				}))
 				.pipe(uglify())
 				// .pipe(chmod(0664))
+				.pipe(setNewTime())
 				.pipe(gulp.dest(pathPrefix + 'assets/js'));
 	}
 });
@@ -126,6 +127,7 @@ gulp.task('blocks-less', function() {
 				.pipe(less())
 				.pipe(autoprefixer())
 				.pipe(cleanCSS())
+				.pipe(setNewTime())
 				.pipe(gulp.dest(pathPrefix + 'assets/css'));
 	}
 });
@@ -160,8 +162,8 @@ gulp.task('watch', function() {
 		'less-dev'
 	)();
 
-	gulp.watch(pathPrefix + 'assets/js-raw/*.js', gulp.series('js-dev')).on('change', cache.update('js-dev'));
-	gulp.watch(pathPrefix + 'assets/less/*.less', gulp.series('less-dev')).on('change', cache.update('less-dev'));
+	gulp.watch(pathPrefix + 'assets/js-raw/*.js').on('change', gulp.series('js-dev'));
+	gulp.watch(pathPrefix + 'assets/less/*.less').on('change', gulp.series('less-dev'));
 
 	gulp.watch(pathPrefix + 'assets/js-raw/separately/*.js').on('change', gulp.series('separately-js'));
 
