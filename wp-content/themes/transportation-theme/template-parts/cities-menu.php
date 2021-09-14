@@ -22,3 +22,8 @@
   <!-- /.cities-pop-up__wrap -->
 </div>
 <!-- /.cities-pop-up -->
+<script>
+  var defaultCityName = "<?php echo get_default_city(true)['name']; ?>";
+  var defaultCityCodeName = "<?php echo get_default_city(true)['code_name']; ?>";
+  var generalEmployeesName = "<?php echo carbon_get_theme_option('general_employees_separated_text') ? carbon_get_theme_option('general_employees_separated_text') : 'Общие'; ?>";
+</script>

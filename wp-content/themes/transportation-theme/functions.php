@@ -194,6 +194,10 @@ require get_template_directory() . '/inc/calc-table-processor.php';
 
 require get_template_directory() . '/inc/disable-defaults.php';
 
+require get_template_directory() . '/inc/insert-city-button.php';
+
+require get_template_directory() . '/inc/employees.php';
+
 /**
  * Load Jetpack compatibility file.
  */

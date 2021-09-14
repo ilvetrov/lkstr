@@ -91,105 +91,123 @@ get_header();
   </section>
   <!-- /.about-screen -->
 
-  <section class="team-screen background-size" id="our-team" <?php imgAsyncSrc('team-screen-background.jpg', true, 'background') ?>>
-    <div class="team-screen__container-size container-size">
-      <div class="team-screen__content section-content">
-        <h2 class="team-screen__title screen-title"><?php the_field('team-screen-title'); ?></h2>
-        <div class="team-screen__employees">
-          <div class="team-screen__carousel-controls-wrap team-screen__side">
-            <div class="team-screen__carousel-controls">
-              <div class="team-screen__carousel-control inactive js-slider-left js-slider-employees-left">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/carousel-left.svg" alt="Кнопка. Предыдущий сотрудник" class="team-screen__carousel-control-img">
-              </div>
-              <div class="team-screen__carousel-control js-slider-right js-slider-employees-right">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/carousel-right.svg" alt="Кнопка. Следующий сотрудник" class="team-screen__carousel-control-img">
-              </div>
-            </div>
-            <!-- /.team-screen__carousel-controls -->
-          </div>
-          <!-- /.team-screen__carousel-controls-wrap -->
-          <div class="team-screen__carousel">
-            <ul class="team-screen__carousel-wrap js-slider-employees">
+  <?php if (carbon_get_theme_option('cities_employees_is_shown') || carbon_get_theme_option('general_employees_is_shown')): ?>
+    <section class="team-screen background-size" id="our-team" <?php imgAsyncSrc('team-screen-background.jpg', true, 'background') ?>>
+      <div class="team-screen__container-size container-size">
+        <div class="team-screen__content section-content" data-contact-city-group="employees" data-contact-city-default="<?php echo carbon_get_theme_option('general_employees_is_separated') ? 'general' : get_current_city()['code_name']; ?>">
+          <h2 class="team-screen__title screen-title"><?php the_field('team-screen-title'); ?></h2>
+          <?php $all_employees = get_employees(); ?>
+          <?php if (carbon_get_theme_option('cities_employees_is_shown')): ?>
+            <div class="team-screen__city-button">
               <?php
-              $employees = get_posts([
-                'post_type' => 'employee',
-                'numberposts' => -1,
-                'order' => 'ASC'
-              ]);
-              foreach ($employees as $employee):
-                $employeeId = $employee->ID;
-                ?>
-                <li class="team-screen__employee-wrap">
-                  <div class="team-screen__employee">
-                    <div class="team-screen__employee-img">
-                      <?php echo get_the_post_thumbnail($employeeId, 'employee-size-272x200'); ?>
-                    </div>
-                    <div class="team-screen__employee-content">
-                      <div class="team-screen__employee-title">
-                        <?php echo esc_html(get_the_title($employeeId)); ?>
-                      </div>
-                      <div class="team-screen__employee-position">
-                        <?php the_field('position', $employeeId); ?>
-                      </div>
-                      
-                      <?php if (get_field('phone', $employeeId)): ?>
-                        <?php if (get_field('employee-data-as-link')): ?>
-                          <a href="tel:<?php echo preg_replace("/[^0-9+]/", "", get_field('phone', $employeeId)); ?>" class="team-screen__employee-data">
-                        <?php else: ?>
-                          <div class="team-screen__employee-data">
-                        <?php endif; ?>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/employee-phone.svg" alt="Номер телефона" class="team-screen__employee-data-icon">
-                            <div class="team-screen__employee-data-text">
-                              <?php the_field('phone', $employeeId); ?>
-                            </div>
-                        <?php if (get_field('employee-data-as-link')): ?>
-                          </a>
-                        <?php else: ?>
-                          </div>
-                        <?php endif; ?>
-                      <?php endif; ?>
-    
-                      <?php if (get_field('email', $employeeId)): ?>
-                        <?php if (get_field('employee-data-as-link')): ?>
-                          <a href="mailto:<?php the_field('email', $employeeId); ?>" class="team-screen__employee-data">
-                        <?php else: ?>
-                          <div class="team-screen__employee-data">
-                        <?php endif; ?>
-                          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/employee-email.svg" alt="Адрес Email" class="team-screen__employee-data-icon">
-                          <div class="team-screen__employee-data-text">
-                            <?php the_field('email', $employeeId); ?>
-                          </div>
-                        <?php if (get_field('employee-data-as-link')): ?>
-                          </a>
-                        <?php else: ?>
-                          </div>
-                        <?php endif; ?>
-                      <?php endif; ?>
-                    </div>
-                    <!-- /.team-screen__employee-content -->
+              if (carbon_get_theme_option('general_employees_is_shown') && !empty($all_employees['general'])) {
+                insert_city_button([
+                  'general' => carbon_get_theme_option('general_employees_separated_text') ? carbon_get_theme_option('general_employees_separated_text') : 'Общие'
+                ]);
+              } else {
+                insert_city_button();
+              }
+              ?>
+            </div>
+            <!-- /.team-screen__city-button -->
+          <?php endif; ?>
+
+          <?php foreach ($all_employees as $employees_city => $employees): ?>
+            <?php if (empty($employees)) continue; ?>
+            <div class="team-screen__employees js-carousel-container <?php echo ((!carbon_get_theme_option('general_employees_is_separated') && trim($employees_city) !== get_default_city()['code_name']) || (carbon_get_theme_option('general_employees_is_separated') && trim($employees_city) !== 'general')) ? 'hidden disabled' : ''; ?> <?php echo !carbon_get_theme_option('cities_employees_is_shown') ? 'team-screen__employees_single' : ''; ?>" data-show-on-contact-city="<?php echo $employees_city; ?>" data-show-on-contact-city-group="employees">
+              <div class="team-screen__carousel-controls-wrap team-screen__side">
+                <div class="team-screen__carousel-controls">
+                  <div class="team-screen__carousel-control inactive js-slider-left" data-employees-carousel-control-left="employees-<?php echo $employees_city; ?>">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/carousel-left.svg" alt="Кнопка. Предыдущий сотрудник" class="team-screen__carousel-control-img">
                   </div>
-                  <!-- /.team-screen__employee -->
-                </li>
-                <!-- /.team-screen__employee-wrap -->
-              <?php endforeach; ?>
-            </ul>
-            <!-- /.team-screen__carousel-wrap -->
+                  <div class="team-screen__carousel-control js-slider-right" data-employees-carousel-control-right="employees-<?php echo $employees_city; ?>">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/carousel-right.svg" alt="Кнопка. Следующий сотрудник" class="team-screen__carousel-control-img">
+                  </div>
+                </div>
+                <!-- /.team-screen__carousel-controls -->
+              </div>
+              <!-- /.team-screen__carousel-controls-wrap -->
+              <div class="team-screen__carousel">
+                <ul class="team-screen__carousel-wrap" data-employees-carousel="employees-<?php echo $employees_city; ?>">
+                  <?php
+                  foreach ($employees as $employee):
+                    $employeeId = $employee->ID;
+                    ?>
+                    <li class="team-screen__employee-wrap">
+                      <div class="team-screen__employee">
+                        <div class="team-screen__employee-img">
+                          <?php echo get_the_post_thumbnail($employeeId, 'employee-size-272x200'); ?>
+                        </div>
+                        <div class="team-screen__employee-content">
+                          <div class="team-screen__employee-title">
+                            <?php echo esc_html(get_the_title($employeeId)); ?>
+                          </div>
+                          <div class="team-screen__employee-position">
+                            <?php the_field('position', $employeeId); ?>
+                          </div>
+                          
+                          <?php if (get_field('phone', $employeeId)): ?>
+                            <?php if (get_field('employee-data-as-link')): ?>
+                              <a href="tel:<?php echo preg_replace("/[^0-9+]/", "", get_field('phone', $employeeId)); ?>" class="team-screen__employee-data">
+                            <?php else: ?>
+                              <div class="team-screen__employee-data">
+                            <?php endif; ?>
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/employee-phone.svg" alt="Номер телефона" class="team-screen__employee-data-icon">
+                                <div class="team-screen__employee-data-text">
+                                  <?php the_field('phone', $employeeId); ?>
+                                </div>
+                            <?php if (get_field('employee-data-as-link')): ?>
+                              </a>
+                            <?php else: ?>
+                              </div>
+                            <?php endif; ?>
+                          <?php endif; ?>
+        
+                          <?php if (get_field('email', $employeeId)): ?>
+                            <?php if (get_field('employee-data-as-link')): ?>
+                              <a href="mailto:<?php the_field('email', $employeeId); ?>" class="team-screen__employee-data">
+                            <?php else: ?>
+                              <div class="team-screen__employee-data">
+                            <?php endif; ?>
+                              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/employee-email.svg" alt="Адрес Email" class="team-screen__employee-data-icon">
+                              <div class="team-screen__employee-data-text">
+                                <?php the_field('email', $employeeId); ?>
+                              </div>
+                            <?php if (get_field('employee-data-as-link')): ?>
+                              </a>
+                            <?php else: ?>
+                              </div>
+                            <?php endif; ?>
+                          <?php endif; ?>
+                        </div>
+                        <!-- /.team-screen__employee-content -->
+                      </div>
+                      <!-- /.team-screen__employee -->
+                    </li>
+                    <!-- /.team-screen__employee-wrap -->
+                  <?php endforeach; ?>
+                </ul>
+                <!-- /.team-screen__carousel-wrap -->
+              </div>
+              <!-- /.team-screen__carousel -->
+              <div class="void team-screen__side"></div>
+              <!-- /.void -->
+            </div>
+            <!-- /.team-screen__employees -->
+            
+          <?php endforeach; ?>
+
+          <div class="team-screen__social-networks">
+            <?php get_template_part('template-parts/social-networks'); ?>
           </div>
-          <!-- /.team-screen__carousel -->
-          <div class="void team-screen__side"></div>
-          <!-- /.void -->
+          <!-- /.team-screen__social-networks -->
         </div>
-        <!-- /.team-screen__employees -->
-        <div class="team-screen__social-networks">
-          <?php get_template_part('template-parts/social-networks'); ?>
-        </div>
-        <!-- /.team-screen__social-networks -->
+        <!-- /.team-screen__content -->
       </div>
-      <!-- /.team-screen__content -->
-    </div>
-    <!-- /.team-screen__container-size -->
-  </section>
-  <!-- /.team-screen -->
+      <!-- /.team-screen__container-size -->
+    </section>
+    <!-- /.team-screen -->
+  <?php endif; ?>
 
   <?php if (!get_field('image-gallery-screen-disabled')): ?>
     <section class="image-gallery-screen background-size" id="photo-gallery" <?php imgAsyncSrc('image-gallery-screen-background.jpg', true, 'background'); ?>>

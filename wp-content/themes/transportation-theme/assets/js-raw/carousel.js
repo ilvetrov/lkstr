@@ -1,14 +1,26 @@
 (function() {
-  const employeesContainer = document.getElementsByClassName('js-slider-employees')[0],
-        employeesLeftButton = document.getElementsByClassName('js-slider-employees-left')[0],
-        employeesRightButton = document.getElementsByClassName('js-slider-employees-right')[0];
-  if (employeesContainer) {
+  const carousels = document.querySelectorAll('[data-employees-carousel]');
+
+  for (let carouselIteration = 0; carouselIteration < carousels.length; carouselIteration++) {
+    const carousel = carousels[carouselIteration];
+    const carouselName = carousel.getAttribute('data-employees-carousel');
+    const leftControl = document.querySelector(`[data-employees-carousel-control-left="${carouselName}"]`);
+    const rightControl = document.querySelector(`[data-employees-carousel-control-right="${carouselName}"]`);
+    const container = findParentByClassName(carousel, 'js-carousel-container');
+    if (!container.classList.contains('disabled')) {
+      initEmployeeCarousel(carousel, leftControl, rightControl);
+    } else {
+      container.onShow = () => initEmployeeCarousel(carousel, leftControl, rightControl);
+    }
+  }
+  
+  function initEmployeeCarousel(carousel, leftControl, rightControl) {
     const employeesSlider = tns({
-      container: employeesContainer,
+      container: carousel,
       items: 4,
       slideBy: 1,
-      prevButton: employeesLeftButton,
-      nextButton: employeesRightButton,
+      prevButton: leftControl,
+      nextButton: rightControl,
       gutter: 30,
       fixedWidth: 272,
       nav: false,
@@ -34,11 +46,11 @@
         }
       }
     });
-
-    employeesRightButton.addEventListener('click', () => {
+  
+    rightControl.addEventListener('click', () => {
       const info = employeesSlider.getInfo();
       if (info.index >= info.slideItems.length - 1) {
-        employeesRightButton.setAttribute('aria-disabled', 'true');
+        rightControl.setAttribute('aria-disabled', 'true');
       }
     });
   }
@@ -100,7 +112,6 @@
     }
   }) {
     let imageGallerySlider;
-
     imageGallerySlider = imageGalleryCarouselRegister(container, leftButton, rightButton, settings);
   }
   

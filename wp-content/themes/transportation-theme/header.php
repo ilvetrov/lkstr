@@ -51,11 +51,13 @@
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/img/phone.svg" alt="Наш номер телефона" class="site-header__phone-icon">
 					<div class="phone-block site-header__phone-block">
 						<div class="phone-block__city-button">
-							<?php require get_template_directory() . '/template-parts/city-button.php'; ?>
+							<?php insert_city_button([
+								'fixed' => true
+							]); ?>
 						</div>
 						<!-- /.phone-block__city-button -->
-						<a href="tel:<?php echo preg_replace("/[^0-9+]/", "", esc_html(get_global_field('company-phone'))); ?>" class="phone not-link-style">
-							<span class="phone__text"><?php echo esc_html(get_global_field('company-phone')); ?></span>
+						<a href="tel:<?php echo preg_replace("/[^0-9+]/", "", esc_html(get_current_city_value('phone_number'))); ?>" class="phone not-link-style" <?php insert_cities_dependent_value('phone_number'); ?>>
+							<span class="phone__text"><?php echo esc_html(get_current_city_value('phone_number')); ?></span>
 						</a>
 						<!-- /.phone -->
 					</div>
