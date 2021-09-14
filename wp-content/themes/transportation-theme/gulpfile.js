@@ -8,8 +8,15 @@ const plumber = require('gulp-plumber');
 const babel = require('gulp-babel');
 const fs = require('fs');
 const chmod = require('gulp-chmod');
-// const cache = require('gulp-cached');
 const cache = require('gulp-memory-cache');
+const through2 = require( 'through2' );    
+
+const setNewTime = () => through2.obj(function(file, enc, cb) {
+	if (file.stat) {
+		file.stat.atime = file.stat.mtime = file.stat.ctime = new Date();
+	}
+	cb(null, file);
+});
 
 const pathPrefix = '';
 
@@ -37,6 +44,7 @@ gulp.task('minify-less', function() {
 			.pipe(less())
 			.pipe(autoprefixer())
 			.pipe(cleanCSS())
+			.pipe(setNewTime())
 			.pipe(gulp.dest(pathPrefix + 'assets/css'));
 });
 
@@ -60,6 +68,7 @@ gulp.task('minify-js', function() {
 			}))
 			.pipe(uglify())
 			.pipe(chmod(0664))
+			.pipe(setNewTime())
 			.pipe(gulp.dest(pathPrefix + 'assets/js'));
 });
 
