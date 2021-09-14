@@ -56,7 +56,16 @@
 							]); ?>
 						</div>
 						<!-- /.phone-block__city-button -->
-						<a href="tel:<?php echo preg_replace("/[^0-9+]/", "", esc_html(get_current_city_value('phone_number'))); ?>" class="phone not-link-style" <?php insert_cities_dependent_value('phone_number'); ?>>
+						<a href="tel:<?php echo preg_replace("/[^0-9+]/", "", esc_html(get_current_city_value('phone_number'))); ?>" class="phone not-link-style" <?php insert_cities_dependent_values('phone_number', [
+							"innerText" => function(String $value)
+							{
+								return esc_html($value);
+							},
+							"href" => function(String $value)
+							{
+								return 'tel:' . preg_replace("/[^0-9+]/", "", esc_html($value));
+							}
+						]); ?>>
 							<span class="phone__text"><?php echo esc_html(get_current_city_value('phone_number')); ?></span>
 						</a>
 						<!-- /.phone -->

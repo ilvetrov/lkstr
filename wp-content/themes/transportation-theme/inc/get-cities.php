@@ -52,18 +52,27 @@ function get_cities_names()
   return $cities_names;
 }
 
-function get_cities_dependent_value(String $name, Bool $secure = false)
+function get_city_value(String $name, Array $city, Bool $secure = false)
 {
-  $values = [];
-  foreach (get_cities($secure) as $city) {
-    $values[$city['code_name']] = $city[$name] ? $city[$name] : get_default_city_value($name, $secure);
-  }
-  return $values;
+  return $city[$name] ? $city[$name] : get_current_city_value($name, $secure);
 }
 
-function insert_cities_dependent_value(String $name, Bool $secure = false)
+function get_cities_dependent_values(String $name, Array $properties, Bool $secure = false)
 {
-  echo 'data-cities-values="' . esc_html(json_encode(get_cities_dependent_value($name, $secure))) . '"';
+  $values_in_cities = [];
+  foreach (get_cities($secure) as $city) {
+    $values = [];
+    foreach ($properties as $property_name => $property_handler) {
+      $values[$property_name] = $property_handler(get_city_value($name, $city, $secure));
+    }
+    $values_in_cities[$city['code_name']] = $values;
+  }
+  return $values_in_cities;
+}
+
+function insert_cities_dependent_values(String $name, Array $properties, Bool $secure = false)
+{
+  echo 'data-cities-values="' . esc_html(json_encode(get_cities_dependent_values($name, $properties, $secure))) . '"';
 }
 
 function get_current_city($secure = false)

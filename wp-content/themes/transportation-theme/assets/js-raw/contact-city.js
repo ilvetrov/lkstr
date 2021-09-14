@@ -84,9 +84,20 @@ function changeCityValues(newCity) {
     const elements = document.querySelectorAll('[data-cities-values]');
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
-      const value = JSON.parse(element.getAttribute('data-cities-values'))[codeName];
-      if (value) {
-        element.innerText = value;
+      const properties = JSON.parse(element.getAttribute('data-cities-values'))[codeName];
+      for (const propertyName in properties) {
+        if (Object.hasOwnProperty.call(properties, propertyName)) {
+          const propertyValue = properties[propertyName];
+          switch (propertyName) {
+            case 'innerText':
+              element.innerText = propertyValue;
+              break;
+          
+            default:
+              element.setAttribute(propertyName, propertyValue);
+              break;
+          }
+        }
       }
     }
   }
@@ -95,7 +106,7 @@ function changeCityValues(newCity) {
     for (let groupIteration = 0; groupIteration < groups.length; groupIteration++) {
       const groupElement = groups[groupIteration];
       const groupName = groupElement.getAttribute('data-contact-city-group');
-      const defaultCity = groupElement.getAttribute('data-contact-city-default').trim();
+      const localDefaultCity = groupElement.getAttribute('data-contact-city-default').trim() ?? defaultCityCodeName;
       const groupedElements = document.querySelectorAll(`[data-show-on-contact-city-group="${groupName}"]`);
       let wasShown = false;
       for (let elementIteration = 0; elementIteration < groupedElements.length; elementIteration++) {
@@ -114,7 +125,7 @@ function changeCityValues(newCity) {
         }
       }
       if (!wasShown) {
-        showBlock(Array.from(groupedElements).find(element => element.getAttribute('data-show-on-contact-city') === defaultCity));
+        showBlock(Array.from(groupedElements).find(element => element.getAttribute('data-show-on-contact-city') === localDefaultCity));
       }
     }
   }
