@@ -5,8 +5,8 @@
     padding-bottom: 70px;
   }
   &__carousel { 
-    width: 1178px + 30px;
-    min-width: 1178px + 30px;
+    width: 1042px;
+    min-width: 1042px;
     position: relative;
     left: 15px;
     overflow: hidden;
@@ -55,11 +55,31 @@
     align-items: flex-start;
     justify-content: center;
   }
+  &__employees-blocks {
+    position: relative;
+  }
   &__employees {
     margin-top: 22px;
     display: flex;
     justify-content: space-between;
     margin-bottom: 268px;
+    animation-name: showStaticSlide;
+    animation-timing-function: ease;
+    animation-duration: .4s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+
+    &.hidden {
+      animation-name: hideStaticSlide;
+      pointer-events: none;
+      user-select: none;
+    }
+    &.obedient {
+      margin-top: 0 !important;
+      top: 0;
+      width: 100%;
+      position: absolute;
+    }
   }
   &__employee {
     width: 272px;
@@ -168,8 +188,8 @@
       padding-bottom: 5vw;
     }
     &__carousel {
-      width: 876px + 30px;
-      min-width: 876px + 30px;
+      width: 740px;
+      min-width: 740px;
       position: relative;
       left: 15px;
     }
@@ -188,8 +208,8 @@
 @media (max-width: 1180px) {
   .team-screen {
     &__carousel {
-      width: 761px + 34px;
-      min-width: 761px + 34px;
+      width: 646px;
+      min-width: 646px;
       position: relative;
       left: 17.5px;
 
@@ -249,8 +269,8 @@
 @media (max-width: 1020px) {
   .team-screen {
     &__carousel {
-      width: 496px + 34px;
-      min-width: 496px + 34px;
+      width: 381px;
+      min-width: 381px;
       position: relative;
       left: 17.5px;
     }
@@ -291,8 +311,8 @@
 @media (max-width: 555px) {
   .team-screen {
     &__carousel {
-      width: 272px + 30px;
-      min-width: 272px + 30px;
+      width: 272px + 115px;
+      min-width: 272px + 115px;
       position: relative;
       left: 15px;
     }
@@ -307,13 +327,50 @@
   }
 }
 
+@media (max-width: 425px) {
+  .team-screen {
+    &__carousel {
+      width: 89vw;
+      min-width: 86vw;
+      position: relative;
+      left: 15px;
+    }
+  }
+}
+
 @media (max-width: 350px) {
   .team-screen {
     &__carousel {
-      width: 231px + 34px;
-      min-width: 231px + 34px;
+      width: 91.4vw;
+      min-width: 91.4vw;
       position: relative;
       left: 17.5px;
     }
+  }
+}
+
+@keyframes hideStaticSlide {
+  0% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  99% {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+}
+
+@keyframes showStaticSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
   }
 }

@@ -17,7 +17,7 @@
   function initEmployeeCarousel(carousel, leftControl, rightControl) {
     const employeesSlider = tns({
       container: carousel,
-      items: 4,
+      items: 3,
       slideBy: 1,
       prevButton: leftControl,
       nextButton: rightControl,
@@ -36,13 +36,13 @@
           fixedWidth: 231,
           gutter: 34,
         },
-        349: {
+        351: {
           fixedWidth: 272,
-          gutter: 30,
+          gutter: 25,
         },
         1: {
           fixedWidth: 231,
-          gutter: 34,
+          gutter: 25,
         }
       }
     });

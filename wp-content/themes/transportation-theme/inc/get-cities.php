@@ -54,7 +54,7 @@ function get_cities_names()
 
 function get_city_value(String $name, Array $city, Bool $secure = false)
 {
-  return $city[$name] ? $city[$name] : get_current_city_value($name, $secure);
+  return (!empty($city[$name])) ? $city[$name] : get_default_city_value($name, $secure);
 }
 
 function get_cities_dependent_values(String $name, Array $properties, Bool $secure = false)
@@ -86,7 +86,7 @@ function get_current_city($secure = false)
 
 function get_current_city_value($name, $secure = false)
 {
-  return get_current_city($secure)[$name];
+  return get_city_value($name, get_current_city($secure), $secure);
 }
 
 function set_current_city($code_name)
@@ -113,6 +113,6 @@ function get_default_city_value($name, $secure = false)
 function trim_city_name(String $city_name)
 {
   if (strlen($city_name) <= 15) return $city_name;
-  $trimmed_name = substr($city_name, 0, 12);
+  $trimmed_name = mb_substr($city_name, 0, 12);
   return "$trimmed_name...";
 }

@@ -50,6 +50,7 @@ insertContactCitiesToList();
 function changeContactCity(elementOnPage) {
   const newCity = elementOnPage.innerText.trim();
   const outputCity = trimCityName(newCity);
+  setCookie('selected_city', nameToCode(newCity), 8760);
   if (newCity !== generalEmployeesName) {
     currentContactCity = newCity;
     changeCityInButtons(newCity, outputCity);
@@ -118,7 +119,9 @@ function changeCityValues(newCity) {
             && newCity.trim() === generalEmployeesName
           )
         ) {
-          showBlock(element);
+          setTimeout(() => {
+            showBlock(element);
+          }, 400);
           wasShown = true;
         } else {
           hideBlock(element);
@@ -141,7 +144,7 @@ function detectCurrentContactCity() {
 }
 
 function showBlock(block) {
-  block.classList.remove('disabled');
+  block.classList.remove('hidden');
   if (typeof block.onShow !== 'undefined') {
     block.onShow();
     delete block.onShow;
@@ -149,7 +152,7 @@ function showBlock(block) {
 }
 
 function hideBlock(block) {
-  block.classList.add('disabled');
+  block.classList.add('hidden');
 }
 
 function codeToName(codeName) {
@@ -157,4 +160,10 @@ function codeToName(codeName) {
   return contactCitiesData.find(contactCity => {
     return contactCity.code_name === codeName;
   })?.name;
+}
+
+function nameToCode(name) {
+  return contactCitiesData.find(contactCity => {
+    return contactCity.name === name;
+  })?.code_name;
 }
