@@ -52,8 +52,9 @@ function get_cities_names()
   return $cities_names;
 }
 
-function get_city_value(String $name, Array $city, Bool $secure = false)
+function get_city_value($name, Array $city, Bool $secure = false)
 {
+  if (!$name || empty($name)) return null;
   return (!empty($city[$name])) ? $city[$name] : get_default_city_value($name, $secure);
 }
 
@@ -62,8 +63,20 @@ function get_cities_dependent_values(String $name, Array $properties, Bool $secu
   $values_in_cities = [];
   foreach (get_cities($secure) as $city) {
     $values = [];
-    foreach ($properties as $property_name => $property_handler) {
-      $values[$property_name] = $property_handler(get_city_value($name, $city, $secure));
+    foreach ($properties as $property_name => $property_data) {
+      $property_handler = is_array($property_data) ? $property_data['handler'] : $property_data;
+      $is_special = preg_match('/^(.+?)--/', $property_name, $specials);
+      $special = $is_special ? $specials[1] : '';
+      switch ($special) {
+        case 'remove-empty':
+          $value = $city[@$property_data['dependent_on']] ? $city[$name] : get_city_value($name, $city, $secure);
+          break;
+        
+        default:
+          $value = get_city_value($name, $city, $secure);
+          break;
+      }
+      $values[$property_name] = $property_handler($value);
     }
     $values_in_cities[$city['code_name']] = $values;
   }

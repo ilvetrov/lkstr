@@ -86,19 +86,48 @@ function changeCityValues(newCity) {
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
       const properties = JSON.parse(element.getAttribute('data-cities-values'))[codeName];
-      for (const propertyName in properties) {
-        if (Object.hasOwnProperty.call(properties, propertyName)) {
-          const propertyValue = properties[propertyName];
+      for (const propertyNameRaw in properties) {
+        if (Object.hasOwnProperty.call(properties, propertyNameRaw)) {
+          const propertyValue = properties[propertyNameRaw];
+          const specialMatch = propertyNameRaw.match(/^(.+?)--/);
+          const special = (specialMatch ?? [])[1];
+          const propertyName = specialMatch ? propertyNameRaw.replace(/^(.+?)--/, '') : propertyNameRaw;
           switch (propertyName) {
             case 'innerText':
               element.innerText = propertyValue;
               break;
           
             default:
+              element.hasAttribute('data-not-smooth-changing') && element.classList.add('undefined-transition');
               element.setAttribute(propertyName, propertyValue);
+              setTimeout(() => {
+                element.hasAttribute('data-not-smooth-changing') && element.classList.remove('undefined-transition');
+              }, 200);
+              break;
+          }
+          switch (special) {
+            case 'remove-empty':
+              if (!propertyValue) {
+                element.removeAttribute(propertyName);
+              }
+              break;
+          
+            default:
               break;
           }
         }
+      }
+    }
+  }
+  {
+    const elements = document.querySelectorAll(`[data-show-only-on-city]`);
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      const elementCity = element.getAttribute('data-show-only-on-city');
+      if (elementCity === codeName) {
+        element.classList.remove('disabled');
+      } else {
+        element.classList.add('disabled');
       }
     }
   }
@@ -107,7 +136,7 @@ function changeCityValues(newCity) {
     for (let groupIteration = 0; groupIteration < groups.length; groupIteration++) {
       const groupElement = groups[groupIteration];
       const groupName = groupElement.getAttribute('data-contact-city-group');
-      const localDefaultCity = groupElement.getAttribute('data-contact-city-default').trim() ?? defaultCityCodeName;
+      const localDefaultCity = groupElement.getAttribute('data-contact-city-default')?.trim() ?? defaultCityCodeName;
       const groupedElements = document.querySelectorAll(`[data-show-on-contact-city-group="${groupName}"]`);
       let wasShown = false;
       for (let elementIteration = 0; elementIteration < groupedElements.length; elementIteration++) {
@@ -119,15 +148,19 @@ function changeCityValues(newCity) {
             && newCity.trim() === generalEmployeesName
           )
         ) {
-          setTimeout(() => {
+          if (groupElement.hasAttribute('data-contact-city-changing-delay')) {
+            setTimeout(() => {
+              showBlock(element);
+            }, Number(groupElement.getAttribute('data-contact-city-changing-delay')));
+          } else {
             showBlock(element);
-          }, 400);
+          }
           wasShown = true;
         } else {
           hideBlock(element);
         }
       }
-      if (!wasShown) {
+      if (!wasShown && !groupElement.hasAttribute('data-contact-city-no-default')) {
         showBlock(Array.from(groupedElements).find(element => element.getAttribute('data-show-on-contact-city') === localDefaultCity));
       }
     }

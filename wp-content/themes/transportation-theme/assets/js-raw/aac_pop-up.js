@@ -101,7 +101,7 @@ function setPositionToButtonCenter(popUp, popUpButton) {
     }
     return forButtonHorizontalCenter;
   }()) + 'px';
-  popUp.style.top = ((popUp.classList.contains('fixed') ? popUpButtonPosition.y : popUpButton.offsetTop) + popUpButtonPosition.height) + 'px';
+  popUp.style.top = ((popUp.classList.contains('fixed') ? popUpButtonPosition.y : (popUpButtonPosition.y + window.scrollY)) + popUpButtonPosition.height) + 'px';
 }
 
 function hidePopUp(popUp, popUpButton = undefined) {

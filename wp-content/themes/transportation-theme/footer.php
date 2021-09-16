@@ -10,13 +10,6 @@
  */
 
 ?>
-
-	<?php if (false): ?>
-	<footer id="colophon" class="site-footer">
-		
-	</footer>
-	<!-- #colophon -->
-	<?php endif; ?>
 	<script>var callPopUpPhoneMask = <?php echo get_global_field('call-pop-up-phone-mask') ? 'true' : 'false'; ?>;</script>
 </div><!-- #page -->
 

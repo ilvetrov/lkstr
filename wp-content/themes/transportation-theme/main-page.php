@@ -90,7 +90,7 @@ get_header();
   <?php if (carbon_get_theme_option('cities_employees_is_shown') || carbon_get_theme_option('general_employees_is_shown')): ?>
     <section class="team-screen background-size" id="our-team" <?php imgAsyncSrc('team-screen-background.jpg', true, 'background') ?>>
       <div class="team-screen__container-size container-size">
-        <div class="team-screen__content section-content" data-contact-city-group="employees" data-contact-city-default="<?php echo $default_employees_city_name; ?>">
+        <div class="team-screen__content section-content" data-contact-city-group="employees" data-contact-city-default="<?php echo $default_employees_city_name; ?>" data-contact-city-changing-delay="400">
           <h2 class="team-screen__title screen-title"><?php the_field('team-screen-title'); ?></h2>
           <?php $all_employees = get_employees(); ?>
           <?php if (carbon_get_theme_option('cities_employees_is_shown')): ?>
@@ -521,49 +521,117 @@ get_header();
             <!-- /.contact-block__ornament -->
             <div class="contact-block__wrap">
               <div class="contact-block__main-part">
-                <a href="tel:<?php echo preg_replace("/[^0-9+]/", "", esc_html(get_global_field('company-phone'))); ?>" class="contact-block__list-item">
-                  <img <?php imgAsyncSrc('phone.svg'); ?> alt="Телефон" class="contact-block__list-item-icon">
-                  <div class="contact-block__list-item-wrap">
-                    <div class="contact-block__list-item-value">
-                      <?php echo esc_html(get_global_field('company-phone')); ?>
-                    </div>
-                    <!-- /.contact-block__list-item-value -->
-                  </div>
-                  <!-- /.contact-block__list-item-wrap -->
-                </a>
-                <!-- /.contact-block__list-item-value -->
-                <a href="mailto:<?php the_global_field('company-email'); ?>" class="contact-block__list-item">
-                  <img <?php imgAsyncSrc('email.svg'); ?> alt="Email" class="contact-block__list-item-icon">
-                  <div class="contact-block__list-item-wrap">
-                    <div href="mailto:<?php the_global_field('company-email'); ?>" class="contact-block__list-item-value">
-                      <?php the_global_field('company-email'); ?>
-                    </div>
-                    <!-- /.contact-block__list-item-value -->
-                  </div>
-                  <!-- /.contact-block__list-item-wrap -->
-                </a>
-                <!-- /.contact-block__list-item-value -->
-                <div class="contact-block__list-item">
-                  <img <?php imgAsyncSrc('location.svg'); ?> alt="Адрес" class="contact-block__list-item-icon">
-                  <div class="contact-block__list-item-wrap">
-                    <div class="contact-block__list-item-value">
-                      <?php the_global_field('company-address'); ?>
-                    </div>
-                    <!-- /.contact-block__list-item-value -->
-                  </div>
-                  <!-- /.contact-block__list-item-wrap -->
+                <div class="contact-block__city-button">
+                  <?php insert_city_button(); ?>
                 </div>
-                <!-- /.contact-block__list-item-value -->
-                <div class="contact-block__list-item">
-                  <img <?php imgAsyncSrc('time.svg'); ?> alt="Время работы" class="contact-block__list-item-icon">
-                  <div class="contact-block__list-item-value">
-                    <?php foreach (get_global_field('company-work-time')['body'] as $timeLine): ?>
-                      <div class="contact-block__time"><span class="contact-block__week-day"><?php echo $timeLine[0]['c']; ?></span> <span class="contact-block__time-value <?php if ($timeLine[2]['c'] == '+') { echo 'contact-block__time-value_accent'; } ?>"><?php echo $timeLine[1]['c']; ?></span></div>
+                <!-- /.contact-block__city-button -->
+                <div class="contact-block__data-blocks">
+                  <div class="contact-block__data">
+                    <a href="tel:<?php echo preg_replace("/[^0-9+]/", "", esc_html(get_current_city_value('phone_number'))); ?>" class="contact-block__list-item" <?php insert_cities_dependent_values('phone_number', [
+                      "href" => function(String $value)
+                      {
+                        return 'tel:' . preg_replace("/[^0-9+]/", "", esc_html($value));
+                      }
+                    ]); ?>>
+                      <img <?php imgAsyncSrc('phone.svg'); ?> alt="Телефон" class="contact-block__list-item-icon">
+                      <div class="contact-block__list-item-wrap">
+                        <div class="contact-block__list-item-value" <?php insert_cities_dependent_values('phone_number', [
+                          "innerText" => function(String $value)
+                          {
+                            return esc_html($value);
+                          }
+                        ]); ?>>
+                          <?php echo esc_html(get_current_city_value('phone_number')); ?>
+                        </div>
+                        <!-- /.contact-block__list-item-value -->
+                      </div>
+                      <!-- /.contact-block__list-item-wrap -->
+                    </a>
+                    <!-- /.contact-block__list-item-value -->
+                    <a href="mailto:<?php echo esc_html(get_current_city_value('email')); ?>" class="contact-block__list-item" <?php insert_cities_dependent_values('email', [
+                      "href" => function(String $value)
+                      {
+                        return 'mailto:' . esc_html($value);
+                      }
+                    ]); ?>>
+                      <img <?php imgAsyncSrc('email.svg'); ?> alt="Email" class="contact-block__list-item-icon">
+                      <div class="contact-block__list-item-wrap">
+                        <div class="contact-block__list-item-value" <?php insert_cities_dependent_values('email', [
+                          "innerText" => function(String $value)
+                          {
+                            return esc_html($value);
+                          }
+                        ]); ?>>
+                          <?php echo esc_html(get_current_city_value('email')); ?>
+                        </div>
+                        <!-- /.contact-block__list-item-value -->
+                      </div>
+                      <!-- /.contact-block__list-item-wrap -->
+                    </a>
+                    <!-- /.contact-block__list-item-value -->
+                    <a <?php echo (get_current_city(true)['address'] ? get_current_city(true)['address_link'] : get_current_city_value('address_link', true)) ? 'href="' . esc_html((get_current_city(true)['address'] ? get_current_city(true)['address_link'] : get_current_city_value('address_link', true))) . '"' : ''; ?> target="_blank" class="contact-block__list-item" data-not-smooth-changing <?php insert_cities_dependent_values('address_link', [
+                      "remove-empty--href" => [
+                        "dependent_on" => 'address',
+                        "handler" => function(String $value)
+                        {
+                          return $value;
+                        }
+                      ]
+                    ]); ?>>
+                      <img <?php imgAsyncSrc('location.svg'); ?> alt="Адрес" class="contact-block__list-item-icon">
+                      <div class="contact-block__list-item-wrap">
+                        <div class="contact-block__list-item-value" <?php insert_cities_dependent_values('address', [
+                          "innerText" => function(String $value)
+                          {
+                            return esc_html($value);
+                          }
+                        ]); ?>>
+                          <?php echo get_current_city_value('address', true); ?>
+                        </div>
+                        <!-- /.contact-block__list-item-value -->
+                      </div>
+                      <!-- /.contact-block__list-item-wrap -->
+                    </a>
+                    <!-- /.contact-block__list-item-value -->
+                    <div class="contact-block__list-item">
+                      <img <?php imgAsyncSrc('time.svg'); ?> alt="Время работы" class="contact-block__list-item-icon">
+                      <div class="contact-block__list-item-value">
+                        <div class="changing-blocks" data-contact-city-group="work-time" data-contact-city-default="<?php echo get_default_city()['code_name']; ?>">
+                          <?php foreach (get_cities() as $city): ?>
+                            <?php if (!$city['work_time']) continue; ?>
+                            
+                            <div class="changing-block <?php echo get_current_city()['code_name'] !== $city['code_name'] ? 'hidden' : ''; ?>" data-show-on-contact-city="<?php echo $city['code_name']; ?>" data-show-on-contact-city-group="work-time">
+                              <?php foreach ($city['work_time'] as $timeLine): ?>
+                                <div class="contact-block__time"><span class="contact-block__week-day"><?php echo $timeLine['week_day']; ?></span> <span class="contact-block__time-value <?php if ($timeLine['accent']) { echo 'contact-block__time-value_accent'; } ?>"><?php echo $timeLine['time']; ?></span></div>
+                              <?php endforeach; ?>
+                            </div>
+                            <!-- /.changing-block -->
+                          <?php endforeach; ?>
+                        </div>
+                        <!-- /.changing-blocks -->
+                      </div>
+                      <!-- /.contact-block__list-item-value -->
+                    </div>
+                    <!-- /.contact-block__list-item -->
+                    <?php foreach (get_cities() as $city): ?>
+                      <?php if (!$city['files']) continue; ?>
+
+                        <?php foreach ($city['files'] as $file): ?>
+                          <?php get_template_part('template-parts/download-file', null, [
+                            "file" => $file,
+                            "show_only_on_city" => $city['code_name']
+                          ]); ?>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                    <?php foreach (carbon_get_theme_option('general_files') as $file): ?>
+                      <?php get_template_part('template-parts/download-file', null, [
+                        "file" => $file,
+                      ]); ?>
                     <?php endforeach; ?>
                   </div>
-                  <!-- /.contact-block__list-item-value -->
+                  <!-- /.contact-block__data -->
                 </div>
-                <!-- /.contact-block__list-item -->
+                <!-- /.contact-block__data-blocks -->
               </div>
               <!-- /.contact-block__main-part -->
               <div class="contact-block__second-part">
@@ -598,7 +666,16 @@ get_header();
         <!-- /.contact-screen__left-side -->
         <?php if (!get_field('contact-screen-deactivate-map')): ?>
           <div class="contact-screen__right-side">
-            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0e4932c9373f880dd0e7ac2f57458b1f65fd31fa40043993c315d70d6b28bb6c&amp;width=100%25&amp;height=580&amp;lang=ru_RU&amp;scroll=true"></script>
+            <div class="changing-blocks" data-contact-city-group="dynamic-maps" data-contact-city-default="<?php echo get_default_city()['code_name']; ?>">
+              <?php foreach (get_cities() as $city): ?>
+                <?php if (!$city['map_code']) continue; ?>
+                <div class="changing-block <?php echo get_current_city()['code_name'] !== $city['code_name'] ? 'hidden' : ''; ?>" data-show-on-contact-city="<?php echo $city['code_name']; ?>" data-show-on-contact-city-group="dynamic-maps">
+                  <div data-dynamic-tag="<?php echo esc_html($city['map_code']); ?>"></div>
+                </div>
+                <!-- /.changing-block -->
+              <?php endforeach; ?>
+            </div>
+            <!-- /.changing-blocks -->
           </div>
           <!-- /.contact-screen__right-side -->
         <?php endif; ?>
