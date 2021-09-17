@@ -138,16 +138,11 @@ function changeCityValues(newCity) {
       const groupName = groupElement.getAttribute('data-contact-city-group');
       const localDefaultCity = groupElement.getAttribute('data-contact-city-default')?.trim() ?? defaultCityCodeName;
       const groupedElements = document.querySelectorAll(`[data-show-on-contact-city-group="${groupName}"]`);
+      const elementForShowing = Array.from(groupedElements).find(element => element.getAttribute('data-show-on-contact-city').trim() === codeName) ?? (!groupElement.hasAttribute('data-contact-city-no-default') ? Array.from(groupedElements).find(element => element.getAttribute('data-show-on-contact-city').trim() === localDefaultCity) : undefined);
       let wasShown = false;
       for (let elementIteration = 0; elementIteration < groupedElements.length; elementIteration++) {
         const element = groupedElements[elementIteration];
-        if (
-          element.getAttribute('data-show-on-contact-city') === codeName
-          || (
-            element.getAttribute('data-show-on-contact-city').trim() === 'general'
-            && newCity.trim() === generalEmployeesName
-          )
-        ) {
+        if (element === elementForShowing) {
           if (groupElement.hasAttribute('data-contact-city-changing-delay')) {
             setTimeout(() => {
               showBlock(element);
@@ -159,9 +154,6 @@ function changeCityValues(newCity) {
         } else {
           hideBlock(element);
         }
-      }
-      if (!wasShown && !groupElement.hasAttribute('data-contact-city-no-default')) {
-        showBlock(Array.from(groupedElements).find(element => element.getAttribute('data-show-on-contact-city') === localDefaultCity));
       }
     }
   }

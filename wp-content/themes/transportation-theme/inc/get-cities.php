@@ -90,7 +90,7 @@ function insert_cities_dependent_values(String $name, Array $properties, Bool $s
 
 function get_current_city($secure = false)
 {
-  if ($GLOBALS['current_city']) return $GLOBALS['current_city'];
+  if (@$GLOBALS['current_city']) return $GLOBALS['current_city'];
 
   $current_city = get_coded_cities($secure)[$_COOKIE[CITY_COOKIE_CODE_NAME]] ?? get_default_city($secure);
   $GLOBALS['current_city'] = $current_city;
@@ -128,4 +128,14 @@ function trim_city_name(String $city_name)
   if (strlen($city_name) <= 15) return $city_name;
   $trimmed_name = mb_substr($city_name, 0, 12);
   return "$trimmed_name...";
+}
+
+function show_block_of_city(Array $city, String $name)
+{
+  if (get_current_city()['code_name'] === $city['code_name'] && !!get_current_city()[$name]) {
+    return true;
+  } else if (get_default_city()['code_name'] === $city['code_name'] && !get_current_city()[$name]) {
+    return true;
+  }
+  return false;
 }

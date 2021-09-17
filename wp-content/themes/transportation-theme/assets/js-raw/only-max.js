@@ -4,9 +4,9 @@
     const initiator = initiators[initiatorIteration];
     const initiatorName = initiator.getAttribute('data-init-only-max-height');
     const elements = document.querySelectorAll(`[data-only-max-height="${initiatorName}"]`);
-    let maxHeight = 0;
-    let maxHeightIteration;
-    for (let elementIteration = 0; elementIteration < elements.length; elementIteration++) {
+    let maxHeight = elements[0].offsetHeight;
+    let maxHeightIteration = 0;
+    for (let elementIteration = 1; elementIteration < elements.length; elementIteration++) {
       const element = elements[elementIteration];
       const elementHeight = element.offsetHeight;
       if (elementHeight > maxHeight) {

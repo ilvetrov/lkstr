@@ -3,3 +3,76 @@
     display: none;
   }
 }
+
+.smooth-changing-blocks {
+  position: relative;
+}
+.smooth-changing-block {
+  animation-name: showStaticSlide;
+  animation-timing-function: ease;
+  animation-duration: .4s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+
+  &_with-translate {
+    animation-name: showStaticSlideWithTranslate;
+  }
+
+  &.obedient {
+    margin-top: 0 !important;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  &.hidden {
+    animation-name: hideStaticSlide;
+    pointer-events: none;
+    user-select: none;
+  }
+  &_with-translate.hidden {
+    animation-name: hideStaticSlideWithTranslate;
+  }
+}
+
+@keyframes hideStaticSlide {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes showStaticSlide {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes hideStaticSlideWithTranslate {
+  0% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  99% {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+}
+
+@keyframes showStaticSlideWithTranslate {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}

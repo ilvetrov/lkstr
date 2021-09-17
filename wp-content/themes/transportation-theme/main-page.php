@@ -90,7 +90,7 @@ get_header();
   <?php if (carbon_get_theme_option('cities_employees_is_shown') || carbon_get_theme_option('general_employees_is_shown')): ?>
     <section class="team-screen background-size" id="our-team" <?php imgAsyncSrc('team-screen-background.jpg', true, 'background') ?>>
       <div class="team-screen__container-size container-size">
-        <div class="team-screen__content section-content" data-contact-city-group="employees" data-contact-city-default="<?php echo $default_employees_city_name; ?>" data-contact-city-changing-delay="400">
+        <div class="team-screen__content section-content" data-contact-city-group="employees" data-contact-city-default="<?php echo $default_employees_city_name; ?>" data-contact-city-changing-delay="100">
           <h2 class="team-screen__title screen-title"><?php the_field('team-screen-title'); ?></h2>
           <?php $all_employees = get_employees(); ?>
           <?php if (carbon_get_theme_option('cities_employees_is_shown')): ?>
@@ -108,11 +108,11 @@ get_header();
             <!-- /.team-screen__city-button -->
           <?php endif; ?>
 
-          <div class="team-screen__employees-blocks" data-init-only-max-height="employees">
+          <div class="team-screen__employees-blocks smooth-changing-blocks" data-init-only-max-height="employees">
             <?php foreach ($all_employees as $employees_city => $employees): ?>
               <?php if (empty($employees)) continue; ?>
 
-              <div class="team-screen__employees js-carousel-container <?php echo (($show_default_employees && $default_employees_city_name !== $employees_city) || (!$show_default_employees && $employees_city !== get_current_city()['code_name'])) ? 'hidden obedient' : ''; ?> <?php echo !carbon_get_theme_option('cities_employees_is_shown') ? 'team-screen__employees_single' : ''; ?>" data-show-on-contact-city="<?php echo $employees_city; ?>" data-show-on-contact-city-group="employees" data-only-max-height="employees">
+              <div class="team-screen__employees smooth-changing-block smooth-changing-block_with-translate js-carousel-container <?php echo (($show_default_employees && $default_employees_city_name !== $employees_city) || (!$show_default_employees && $employees_city !== get_current_city()['code_name'])) ? 'hidden obedient' : ''; ?>" data-show-on-contact-city="<?php echo $employees_city; ?>" data-show-on-contact-city-group="employees" data-only-max-height="employees">
                 <div class="team-screen__carousel-controls-wrap team-screen__side">
                   <div class="team-screen__carousel-controls">
                     <div class="team-screen__carousel-control inactive js-slider-left" data-employees-carousel-control-left="employees-<?php echo $employees_city; ?>">
@@ -600,7 +600,7 @@ get_header();
                           <?php foreach (get_cities() as $city): ?>
                             <?php if (!$city['work_time']) continue; ?>
                             
-                            <div class="changing-block <?php echo get_current_city()['code_name'] !== $city['code_name'] ? 'hidden' : ''; ?>" data-show-on-contact-city="<?php echo $city['code_name']; ?>" data-show-on-contact-city-group="work-time">
+                            <div class="changing-block <?php echo (!show_block_of_city($city, 'work_time') ? 'hidden' : ''); ?>" data-show-on-contact-city="<?php echo $city['code_name']; ?>" data-show-on-contact-city-group="work-time">
                               <?php foreach ($city['work_time'] as $timeLine): ?>
                                 <div class="contact-block__time"><span class="contact-block__week-day"><?php echo $timeLine['week_day']; ?></span> <span class="contact-block__time-value <?php if ($timeLine['accent']) { echo 'contact-block__time-value_accent'; } ?>"><?php echo $timeLine['time']; ?></span></div>
                               <?php endforeach; ?>
@@ -666,16 +666,16 @@ get_header();
         <!-- /.contact-screen__left-side -->
         <?php if (!get_field('contact-screen-deactivate-map')): ?>
           <div class="contact-screen__right-side">
-            <div class="changing-blocks" data-contact-city-group="dynamic-maps" data-contact-city-default="<?php echo get_default_city()['code_name']; ?>">
+            <div class="smooth-changing-blocks" data-contact-city-group="dynamic-maps" data-contact-city-default="<?php echo get_default_city()['code_name']; ?>" data-init-only-max-height="map">
               <?php foreach (get_cities() as $city): ?>
                 <?php if (!$city['map_code']) continue; ?>
-                <div class="changing-block <?php echo get_current_city()['code_name'] !== $city['code_name'] ? 'hidden' : ''; ?>" data-show-on-contact-city="<?php echo $city['code_name']; ?>" data-show-on-contact-city-group="dynamic-maps">
+                <div class="smooth-changing-block <?php echo (!show_block_of_city($city, 'map_code') ? 'hidden obedient' : ''); ?>" data-show-on-contact-city="<?php echo $city['code_name']; ?>" data-show-on-contact-city-group="dynamic-maps" data-only-max-height="map">
                   <div data-dynamic-tag="<?php echo esc_html($city['map_code']); ?>"></div>
                 </div>
-                <!-- /.changing-block -->
+                <!-- /.smooth-changing-block -->
               <?php endforeach; ?>
             </div>
-            <!-- /.changing-blocks -->
+            <!-- /.smooth-changing-blocks -->
           </div>
           <!-- /.contact-screen__right-side -->
         <?php endif; ?>
