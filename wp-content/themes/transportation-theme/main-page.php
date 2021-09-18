@@ -167,10 +167,10 @@ get_header();
                               <?php else: ?>
                                 <div class="team-screen__employee-data">
                               <?php endif; ?>
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/employee-email.svg" alt="Адрес Email" class="team-screen__employee-data-icon">
-                                <div class="team-screen__employee-data-text">
-                                  <?php the_field('email', $employeeId); ?>
-                                </div>
+                                  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/employee-email.svg" alt="Адрес Email" class="team-screen__employee-data-icon">
+                                  <div class="team-screen__employee-data-text">
+                                    <span><?php preg_match('/^(.+?)@/', get_field('email', $employeeId), $employee_email); echo $employee_email[1]; ?></span><span class="team-screen__employee-non-break"><?php preg_match('/@.+$/', get_field('email', $employeeId), $employee_email); echo $employee_email[0]; ?></span>
+                                  </div>
                               <?php if (get_field('employee-data-as-link')): ?>
                                 </a>
                               <?php else: ?>

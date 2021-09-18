@@ -105,7 +105,13 @@ function setPositionToButtonCenter(popUp, popUpButton) {
     }
     return forButtonHorizontalCenter;
   }()) + 'px';
-  popUp.style.top = ((popUp.classList.contains('fixed') ? popUpButtonPosition.y : (popUpButtonPosition.y + window.scrollY)) + popUpButtonPosition.height) + 'px';
+  popUp.style.top = (function() {
+    const bottomOfButton = ((popUp.classList.contains('fixed') ? popUpButtonPosition.y : (popUpButtonPosition.y + window.scrollY)) + popUpButtonPosition.height);
+    if (bottomOfButton + popUpPosition.height > document.body.offsetHeight) {
+      return bottomOfButton - popUpPosition.height - popUpButtonPosition.height;
+    }
+    return bottomOfButton;
+  }()) + 'px';
 }
 
 function hidePopUp(popUp, popUpButton = undefined) {
