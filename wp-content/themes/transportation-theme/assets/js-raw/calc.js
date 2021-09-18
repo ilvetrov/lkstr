@@ -1,26 +1,26 @@
 const formulaAliases = {
-        WVC : getWeightPriceOrVolumePrice,
-        WC : getWeightPrice,
-        VC : getVolumePrice,
-        WV : getWeightOrVolume,
-        V : getVolumeForOperations,
-        W : getWeight,
-      },
-      sendingCitiesListElement = document.getElementsByClassName('js-calc-sending-cities')[0],
-      recipientCitiesListElement = document.getElementsByClassName('js-calc-recipient-cities')[0],
-      sendingCityOutput = document.getElementsByClassName('js-calc-sending-city-output')[0],
-      recipientCityOutput = document.getElementsByClassName('js-calc-recipient-city-output')[0],
-      weightElement = document.getElementsByClassName('js-calc-input-weight')[0],
-      volumeElement = document.getElementsByClassName('js-calc-input-volume')[0],
-      outputAddressFrom = document.getElementsByClassName('js-calc-address-from')[0],
-      outputAddressTo = document.getElementsByClassName('js-calc-address-to')[0],
-      outputVolume = document.getElementsByClassName('js-calc-volume')[0],
-      outputWeight = document.getElementsByClassName('js-calc-weight')[0],
-      outputTotalCost = document.getElementsByClassName('js-calc-total-cost')[0],
-      symbolOfVolume = document.getElementsByClassName('js-calc-volume-symbol')[0],
-      symbolOfWeight = document.getElementsByClassName('js-calc-weight-symbol')[0],
-      calcStatus = document.getElementsByClassName('js-calc-status')[0],
-      calcStatusOutput = document.getElementsByClassName('js-calc-status-output')[0];
+  WVC : getWeightPriceOrVolumePrice,
+  WC : getWeightPrice,
+  VC : getVolumePrice,
+  WV : getWeightOrVolume,
+  V : getVolumeForOperations,
+  W : getWeight,
+};
+const sendingCitiesListElement = document.getElementsByClassName('js-calc-sending-cities')[0];
+const recipientCitiesListElement = document.getElementsByClassName('js-calc-recipient-cities')[0];
+const sendingCityOutput = document.getElementsByClassName('js-calc-sending-city-output')[0];
+const recipientCityOutput = document.getElementsByClassName('js-calc-recipient-city-output')[0];
+const weightElement = document.getElementsByClassName('js-calc-input-weight')[0];
+const volumeElement = document.getElementsByClassName('js-calc-input-volume')[0];
+const outputAddressFrom = document.getElementsByClassName('js-calc-address-from')[0];
+const outputAddressTo = document.getElementsByClassName('js-calc-address-to')[0];
+const outputVolume = document.getElementsByClassName('js-calc-volume')[0];
+const outputWeight = document.getElementsByClassName('js-calc-weight')[0];
+const outputTotalCost = document.getElementsByClassName('js-calc-total-cost')[0];
+const symbolOfVolume = document.getElementsByClassName('js-calc-volume-symbol')[0];
+const symbolOfWeight = document.getElementsByClassName('js-calc-weight-symbol')[0];
+const calcStatus = document.getElementsByClassName('js-calc-status')[0];
+const calcStatusOutput = document.getElementsByClassName('js-calc-status-output')[0];
 
 if (typeof volumeElement != 'undefined' && typeof weightElement != 'undefined') {
   volumeElement.addEventListener('input', () => {
@@ -139,7 +139,7 @@ function calculateFormula(formulaData) {
   return (new Function('return ' + formulaData.formula + ';'))();
 }
 function checkWeightUsing(weight, volume) {
-  return weight / volume > densityThreshold;
+  return weight / getVolumeForOperations(volume) > densityThreshold;
 }
 function getWeightOrVolume() {
   const weight = getWeight(),

@@ -477,7 +477,7 @@ get_header();
                 </div>
                 <!-- /.calc__data-row -->
                 <div class="calc__total-cost js-calc-total-cost-container"><span class="js-calc-total-cost">0</span><span class="calc__total-cost-accent-symbol"> ₽</span></div>
-                <div class="calc__order-button accent-button" data-pop-up-button="call">
+                <div class="calc__order-button accent-button" data-pop-up-button="call" data-pop-up-from-calc>
                   <div class="accent-button__inner-border">
                     <div class="accent-button__content calc__order-button-content">
                       <div class="accent-button__text">Оформить заявку</div>

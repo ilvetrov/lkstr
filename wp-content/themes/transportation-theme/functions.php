@@ -183,6 +183,8 @@ require get_template_directory() . '/inc/get-cities.php';
 
 require get_template_directory() . '/inc/acf-to-admin-menu.php';
 
+require get_template_directory() . '/inc/is-json.php';
+
 require get_template_directory() . '/inc/lead-to-mail.php';
 
 require get_template_directory() . '/inc/CSRF.php';

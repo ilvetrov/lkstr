@@ -47,6 +47,10 @@ function showPopUp(popUp, popUpButton = undefined) {
   popUp = detectPopUpInVariable(popUp);
   if (!popUp) return false;
 
+  if (popUpButton.hasAttribute('data-pop-up-from-calc')) {
+    popUp.classList.add('pop-up-from-calc');
+  }
+
   const popUpIsList = popUp.hasAttribute('data-pop-up-is-list');
   const centerContentOnButton = popUp.hasAttribute('data-pop-up-center-content-on-button');
 
@@ -107,6 +111,8 @@ function setPositionToButtonCenter(popUp, popUpButton) {
 function hidePopUp(popUp, popUpButton = undefined) {
   popUp = detectPopUpInVariable(popUp);
   if (!popUp) return false;
+
+  popUp.classList.remove('pop-up-from-calc');
 
   const popUpIsList = popUp.hasAttribute('data-pop-up-is-list');
 

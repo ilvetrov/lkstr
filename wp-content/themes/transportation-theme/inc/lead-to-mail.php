@@ -1,17 +1,18 @@
 <?php
 
-function sendMail($name, $phone)
+function sendMail($name, $phone, Array $additional = [])
 {
   $recipients = get_global_field('call-pop-up-recipients');
   if ($recipients) {
     $emailSubject = get_global_field('call-pop-up-email-subject') ? get_global_field('call-pop-up-email-subject') : 'Новая заявка с сайта severtrans.net';
 
-    return wp_mail($recipients, $emailSubject, getMailHtml($name, $phone), [
-      'content-type' => 'text/html'
-    ]);
+    return getMailHtml($name, $phone, $additional);
+    // return wp_mail($recipients, $emailSubject, getMailHtml($name, $phone, $additional), [
+    //   'content-type' => 'text/html'
+    // ]);
   }
 }
-function getMailHtml($name, $phone)
+function getMailHtml($name, $phone, Array $additional = [])
 {
   ob_start();
   require get_template_directory() . '/template-parts/mail.php';

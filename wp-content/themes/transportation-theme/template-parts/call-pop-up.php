@@ -27,6 +27,7 @@
             </div>
           </label>
           <!-- /.calc__input -->
+          <input type="hidden" name="additional" class="js-call-form-additional-data">
           <input type="hidden" name="token" value="<?php echo CSRF::createToken(); ?>">
           <input type="hidden" name="action" value="call_form">
           <button class="call-pop-up__button accent-button" type="submit">
