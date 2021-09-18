@@ -8,6 +8,8 @@
     if (!link) continue;
     const virtualElement = htmlStringToJs(tagInString);
     const attributes = virtualElement.attributes;
+    const delay = Number(element.getAttribute('data-dynamic-tag-delay'));
+    const whenScroll = element.hasAttribute('data-dynamic-tag-when-scroll');
 
     const newElement = document.createElement(virtualElement.tagName.toLowerCase());
     for (let i = 0; i < attributes.length; i++) {
@@ -16,9 +18,32 @@
     }
 
     window.addEventListener('load', function() {
-      element.parentNode.appendChild(newElement);
-      element.remove();
+      if (delay) {
+        setTimeout(() => {
+          replaceElement(element, newElement);
+        }, delay);
+
+        return;
+      }
+      if (whenScroll) {
+        let srcAdded = false;
+        const handler = window.addEventListener(OptimizedScroll.defaultEventName, function() {
+          if (!srcAdded && checkThatObjectIsInScrollArea(element, 400)) {
+            srcAdded = true;
+            replaceElement(element, newElement);
+            window.removeEventListener(OptimizedScroll.defaultEventName, handler);
+          }
+        });
+        return;
+      }
+      
+      replaceElement(element, newElement);
     });
+  }
+
+  function replaceElement(element, newElement) {
+    element.parentNode.appendChild(newElement);
+    element.remove();
   }
     
 }());

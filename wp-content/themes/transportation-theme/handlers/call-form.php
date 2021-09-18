@@ -30,28 +30,8 @@ if (!empty(@$data['name'])
   }
   
   $resultSuccess = sendMail($data['name'], $data['phone'], $additional);
-  // $resultSuccess = sendMail($data['name'], $data['phone'], [
-  //   'calc_data' => [
-  //     'all_data_is_filled' => (
-  //       !empty(@$data['sending_city'])
-  //       && !empty(@$data['recipient_city'])
-  //       && !empty(@$data['volume'])
-  //       && !empty(@$data['weight'])
-  //       && !empty(@$data['calculated_tariff'])
-  //       && !empty(@$data['calculated_price'])
-  //     ),
-  //     'refine_the_data' => @$data['refine_the_data'],
 
-  //     'sending_city' => @$data['sending-city'],
-  //     'recipient_city' => @$data['recipient-city'],
-  //     'volume' => @$data['volume'],
-  //     'weight' => @$data['weight'],
-  //     'calculated_price' => @$data['calculate-price'],
-  //   ]
-  // ]);
-
-  echo $resultSuccess;
-  // wp_redirect('/form-success', '302');
+  wp_redirect('/form-success', '302');
   exit;
 }
 

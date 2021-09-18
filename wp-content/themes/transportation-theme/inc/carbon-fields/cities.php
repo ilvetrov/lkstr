@@ -122,6 +122,44 @@ function crb_attach_cities_options()
       ->set_help_text('Показывается, например, внизу сайта.'),
     Field::make('text', 'bank_bik', 'БИК банка')
       ->set_help_text('Показывается, например, внизу сайта.'),
+  ])
+  ->add_tab('Данные в письме', [
+    Field::make('checkbox', 'refine_calc_data', 'Включить надпись "Уточните данные"')
+      ->set_default_value(true)
+      ->set_help_text('Если калькулятор заполнен, но заявка оставлена не по его кнопке, то выводить это уточнение.'),
+    Field::make('text', 'refine_calc_data_title', 'Текст надписи уточнения данных')
+      ->set_default_value('Уточните данные')
+      ->set_conditional_logic([
+        [
+          'field' => 'refine_calc_data',
+          'value' => true
+        ]
+      ]),
+    Field::make('text', 'refine_calc_data_text', 'Пояснение к надписи уточнения данных')
+      ->set_default_value('Клиент заказал звонок не из калькулятора.')
+      ->set_conditional_logic([
+        [
+          'field' => 'refine_calc_data',
+          'value' => true
+        ]
+      ]),
+    Field::make('checkbox', 'selected_city_text_turn_on', 'Включить поле с выбранными контактами')
+      ->set_default_value(true)
+      ->set_help_text('Выводит в пиьсме название выбранного пользователем города.'),
+    Field::make('text', 'selected_city_text', 'Текст поля выбранных контактов')
+      ->set_default_value('Выбранные контакты')
+      ->set_conditional_logic([
+        [
+          'field' => 'selected_city_text_turn_on',
+          'value' => true
+        ]
+      ]),
+    Field::make('checkbox', 'price_in_mail', 'Выводить цену в письме')
+      ->set_default_value(true)
+      ->set_help_text('Выводит в письме рассчитанную цену в калькуляторе, если пользователь заполнил достаточно данных.'),
+    Field::make('checkbox', 'tariff_in_mail', 'Выводить тариф в письме')
+      ->set_default_value(true)
+      ->set_help_text('Общая цена рассчитывается из цены кубического метра или килограмма, в зависимости от введённых данных. <br>Если включено, то в письме будет эта цена.'),
   ]);
 
   $general_files_options_container = Container::make('theme_options', 'Файлы (общие)')

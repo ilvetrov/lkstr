@@ -52,6 +52,20 @@ defined('ABSPATH') or die('Cannot access pages directly.');
                     </td>
                   </tr>
 
+                  <?php if (carbon_get_theme_option('selected_city_text_turn_on')): ?>
+                    <tr>
+                      <td align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+                          <tr>
+                            <td style="padding: 20px 0 10px 0;">
+                              <span><?php echo carbon_get_theme_option('selected_city_text'); ?>: </span><span style="font-weight: 700;"><?php echo get_current_city_value('name'); ?></span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  <?php endif; ?>
+
                   <?php if (empty(@$additional['calc_data']) || $additional['calc_data']['is_empty']): ?>
                     <tr>
                       <td align="center">
@@ -159,7 +173,7 @@ defined('ABSPATH') or die('Cannot access pages directly.');
                     <?php endif; ?>
 
                     <?php if ($additional['calc_data']['all_data_is_filled']): ?>
-                      <?php if (!empty(@$additional['calc_data']['calculated_tariff'])): ?>
+                      <?php if (!empty(@$additional['calc_data']['calculated_tariff']) && carbon_get_theme_option('tariff_in_mail')): ?>
                         <tr>
                           <td align="center">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
@@ -178,7 +192,7 @@ defined('ABSPATH') or die('Cannot access pages directly.');
                         </tr>
                       <?php endif; ?>
   
-                      <?php if (!empty(@$additional['calc_data']['calculated_price'])): ?>
+                      <?php if (!empty(@$additional['calc_data']['calculated_price']) && carbon_get_theme_option('price_in_mail')): ?>
                         <tr>
                           <td align="center">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
@@ -198,18 +212,18 @@ defined('ABSPATH') or die('Cannot access pages directly.');
                       <?php endif; ?>
                     <?php endif; ?>
 
-                    <?php if (!empty(@$additional['calc_data']['refine_the_data'])): ?>
+                    <?php if (!empty(@$additional['calc_data']['refine_the_data']) && carbon_get_theme_option('refine_calc_data')): ?>
                       <tr>
                         <td align="center">
                           <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
                             <tr>
                               <td style="padding: 30px 0 0 0; font-weight: 700;">
-                                <span style="color: #ff0000;">• Уточните данные</span>
+                                <span style="color: #ff0000;">• <?php echo carbon_get_theme_option('refine_calc_data_title'); ?></span>
                               </td>
                             </tr>
                             <tr>
                               <td style="padding: 7px 0 0 0;">
-                                <span>Клиент заказал звонок не из калькулятора.</span>
+                                <span><?php echo carbon_get_theme_option('refine_calc_data_text'); ?></span>
                               </td>
                             </tr>
                           </table>

@@ -670,7 +670,7 @@ get_header();
               <?php foreach (get_cities() as $city): ?>
                 <?php if (!$city['map_code']) continue; ?>
                 <div class="smooth-changing-block <?php echo (!show_block_of_city($city, 'map_code') ? 'hidden obedient' : ''); ?>" data-show-on-contact-city="<?php echo $city['code_name']; ?>" data-show-on-contact-city-group="dynamic-maps" data-only-max-height="map">
-                  <div data-dynamic-tag="<?php echo esc_html($city['map_code']); ?>"></div>
+                  <div data-dynamic-tag="<?php echo esc_html($city['map_code']); ?>" data-dynamic-tag-when-scroll></div>
                 </div>
                 <!-- /.smooth-changing-block -->
               <?php endforeach; ?>

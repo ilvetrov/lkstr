@@ -15,18 +15,18 @@
       
       srcComplexAddFunctions[scrollImgIteration] = function() {
         if (!srcAdded && checkThatObjectIsInScrollArea(img, 200)) {
-          img.src = srcForAdd;
           srcAdded = true;
-          document.removeEventListener('scroll', srcComplexAddFunctions[scrollImgIteration]);
+          setSrcForImg(img, srcForAdd);
+          window.removeEventListener(OptimizedScroll.defaultEventName, srcComplexAddFunctions[scrollImgIteration]);
         }
       }
       
       setTimeout(() => {
         if (!srcAdded && checkThatObjectIsInScrollArea(img, 200)) {
-          img.src = srcForAdd;
           srcAdded = true;
+          setSrcForImg(img, srcForAdd);
         } else {
-          document.addEventListener('scroll', srcComplexAddFunctions[scrollImgIteration]);
+          window.addEventListener(OptimizedScroll.defaultEventName, srcComplexAddFunctions[scrollImgIteration]);
         }
       }, 100);
       
@@ -38,18 +38,18 @@
       
       srcComplexAddFunctionsForBackground[scrollBackgroundIteration] = function() {
         if (!srcAdded && checkThatObjectIsInScrollArea(img, 400)) {
-          img.style.backgroundImage = `url(${srcForAdd})`;
           srcAdded = true;
-          document.removeEventListener('scroll', srcComplexAddFunctionsForBackground[scrollBackgroundIteration]);
+          setSrcForBackground(img, srcForAdd);
+          window.removeEventListener(OptimizedScroll.defaultEventName, srcComplexAddFunctionsForBackground[scrollBackgroundIteration]);
         }
       }
       
       setTimeout(() => {
         if (!srcAdded && checkThatObjectIsInScrollArea(img, 400)) {
-          img.style.backgroundImage = `url(${srcForAdd})`;
           srcAdded = true;
+          setSrcForBackground(img, srcForAdd);
         } else {
-          document.addEventListener('scroll', srcComplexAddFunctionsForBackground[scrollBackgroundIteration]);
+          window.addEventListener(OptimizedScroll.defaultEventName, srcComplexAddFunctionsForBackground[scrollBackgroundIteration]);
         }
       }, 100);
       
@@ -58,14 +58,32 @@
     for (let asyncImgIteration = 0; asyncImgIteration < asyncImg.length; asyncImgIteration++) {
       let img = asyncImg[asyncImgIteration],
           srcForAdd = img.getAttribute('data-async-img');
-      img.src = srcForAdd;
+      setSrcForImg(img, srcForAdd);
     }
     
     for (let asyncBackgroundIteration = 0; asyncBackgroundIteration < asyncBackground.length; asyncBackgroundIteration++) {
       let img = asyncBackground[asyncBackgroundIteration],
           srcForAdd = img.getAttribute('data-async-background');
-      img.style.backgroundImage = `url(${srcForAdd})`;
+      setSrcForBackground(img, srcForAdd);
     }
 
   });
+
+  function setSrcForImg(img, srcForAdd) {
+    const newImage = new Image();
+    newImage.src = srcForAdd;
+  
+    newImage.onload = function() {
+      img.src = srcForAdd;
+    };
+  }
+
+  function setSrcForBackground(img, srcForAdd) {
+    const newImage = new Image();
+    newImage.src = srcForAdd;
+  
+    newImage.onload = function() {
+      img.style.backgroundImage = `url(${srcForAdd})`;
+    };
+  }
 }());

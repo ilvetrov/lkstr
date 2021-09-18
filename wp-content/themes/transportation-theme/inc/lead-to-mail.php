@@ -6,10 +6,9 @@ function sendMail($name, $phone, Array $additional = [])
   if ($recipients) {
     $emailSubject = get_global_field('call-pop-up-email-subject') ? get_global_field('call-pop-up-email-subject') : 'Новая заявка с сайта severtrans.net';
 
-    return getMailHtml($name, $phone, $additional);
-    // return wp_mail($recipients, $emailSubject, getMailHtml($name, $phone, $additional), [
-    //   'content-type' => 'text/html'
-    // ]);
+    return wp_mail($recipients, $emailSubject, getMailHtml($name, $phone, $additional), [
+      'content-type' => 'text/html'
+    ]);
   }
 }
 function getMailHtml($name, $phone, Array $additional = [])
