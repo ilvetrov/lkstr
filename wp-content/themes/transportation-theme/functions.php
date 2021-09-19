@@ -215,8 +215,8 @@ if (is_admin()) {
 	{
 		return "direct";
 	});
-	define( 'FS_CHMOD_DIR', 0755 );
-	define( 'FS_CHMOD_FILE', 0644 );
+	define( 'FS_CHMOD_DIR', 0775 );
+	define( 'FS_CHMOD_FILE', 0664 );
 }
 
 function register_post_types()
