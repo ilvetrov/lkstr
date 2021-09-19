@@ -31,7 +31,7 @@ function crb_attach_cities_options()
       Field::make('text', 'address_link', 'Ссылка на адрес')
         ->set_help_text('Опционально. Ссылка на Яндекс.Карты. Если добавить, то эта ссылка будет открываться при нажатии на адрес.'),
       Field::make('text', 'map_code', 'Код карты')
-        ->set_help_text('Инструкция по добавлению: <a href="/" target="_blank">ссылка</a>'),
+        ->set_help_text('Инструкция по добавлению: <a href="/kak-dobavit-kartu-instrukcziya" target="_blank">ссылка</a>.'),
       Field::make('complex', 'work_time', 'Время работы')
         ->set_help_text('Выводятся в подвале сайта при выборе этого города. Если не добавлять промежутки, то будет использовано значение города по умолчанию.')
         ->setup_labels([

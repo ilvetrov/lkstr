@@ -7,3 +7,4 @@ wp-content/uploads/
 *.sqlite
 wp-config.php
 package-lock.json
+wp-content/themes/*/assets/img/blanks/
