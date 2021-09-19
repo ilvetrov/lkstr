@@ -141,18 +141,18 @@ get_header();
                               <?php echo esc_html(get_the_title($employeeId)); ?>
                             </div>
                             <div class="team-screen__employee-position">
-                              <?php the_field('position', $employeeId); ?>
+                              <?php echo carbon_get_post_meta($employeeId, 'crb_position'); ?>
                             </div>
                             
-                            <?php if (get_field('phone', $employeeId)): ?>
+                            <?php if (carbon_get_post_meta($employeeId, 'crb_phone')): ?>
                               <?php if (get_field('employee-data-as-link')): ?>
-                                <a href="tel:<?php echo preg_replace("/[^0-9+]/", "", get_field('phone', $employeeId)); ?>" class="team-screen__employee-data">
+                                <a href="tel:<?php echo preg_replace("/[^0-9+]/", "", carbon_get_post_meta($employeeId, 'crb_phone')); ?>" class="team-screen__employee-data">
                               <?php else: ?>
                                 <div class="team-screen__employee-data">
                               <?php endif; ?>
                                   <img src="<?php echo get_template_directory_uri(); ?>/assets/img/employee-phone.svg" alt="Номер телефона" class="team-screen__employee-data-icon">
                                   <div class="team-screen__employee-data-text">
-                                    <?php the_field('phone', $employeeId); ?>
+                                    <?php echo carbon_get_post_meta($employeeId, 'crb_phone'); ?>
                                   </div>
                               <?php if (get_field('employee-data-as-link')): ?>
                                 </a>
@@ -161,15 +161,15 @@ get_header();
                               <?php endif; ?>
                             <?php endif; ?>
           
-                            <?php if (get_field('email', $employeeId)): ?>
+                            <?php if (carbon_get_post_meta($employeeId, 'crb_email')): ?>
                               <?php if (get_field('employee-data-as-link')): ?>
-                                <a href="mailto:<?php the_field('email', $employeeId); ?>" class="team-screen__employee-data">
+                                <a href="mailto:<?php echo carbon_get_post_meta($employeeId, 'crb_email'); ?>" class="team-screen__employee-data">
                               <?php else: ?>
                                 <div class="team-screen__employee-data">
                               <?php endif; ?>
                                   <img src="<?php echo get_template_directory_uri(); ?>/assets/img/employee-email.svg" alt="Адрес Email" class="team-screen__employee-data-icon">
                                   <div class="team-screen__employee-data-text">
-                                    <span><?php preg_match('/^(.+?)@/', get_field('email', $employeeId), $employee_email); echo $employee_email[1]; ?></span><span class="team-screen__employee-non-break"><?php preg_match('/@.+$/', get_field('email', $employeeId), $employee_email); echo $employee_email[0]; ?></span>
+                                    <span><?php preg_match('/^(.+?)@/', carbon_get_post_meta($employeeId, 'crb_email'), $employee_email); echo $employee_email[1]; ?></span><span class="team-screen__employee-non-break"><?php preg_match('/@.+$/', carbon_get_post_meta($employeeId, 'crb_email'), $employee_email); echo $employee_email[0]; ?></span>
                                   </div>
                               <?php if (get_field('employee-data-as-link')): ?>
                                 </a>
@@ -646,12 +646,12 @@ get_header();
           </div>
           <!-- /.contact-block -->
           <div class="contact-screen__info">
-            <div class="contact-screen__info-bank"><?php the_global_field('company-bank'); ?></div>
+            <div class="contact-screen__info-bank"><?php echo carbon_get_theme_option('bank_name'); ?></div>
             <div class="contact-screen__info-juridical">
               <div class="contact-screen__info-juridical-left">
-                <div>Р/сч <?php the_global_field('company-bank-account-number'); ?></div>
-                <div>К/сч <?php the_global_field('company-bank-correspondent-number'); ?></div>
-                <div>БИК <?php the_global_field('company-bik'); ?></div>
+                <div>Р/сч <?php echo carbon_get_theme_option('bank_account_number'); ?></div>
+                <div>К/сч <?php echo carbon_get_theme_option('bank_correspondent_number'); ?></div>
+                <div>БИК <?php echo carbon_get_theme_option('bank_bik'); ?></div>
               </div>
               <!-- /.contact-screen__info-juridical-left -->
               <div class="contact-screen__info-juridical-right">

@@ -17,10 +17,11 @@ function crb_attach_cities_options()
     ])
     ->add_fields([
       Field::make('text', 'name', 'Название')
+        ->set_required()
         ->set_help_text('Когда пользователь выбирает город, он видит это название.'),
       Field::make('text', 'code_name', 'Техническое название')
-        ->set_help_text('Три-четыре буквы, обозначающие город на латинице. Маленькими буквами без спец. знаков. Например: Москва - mscv, Санкт-Петербург - snpt, Иркутск - irkt, Новосибирск - nvsb и т.д. Связывает город, сотрудников и код. Нигде не выводится. Укажите один раз и <strong>не меняйте</strong>. Если для города появились сотрудники, значит название указано верно.')
-        ->set_required(),
+        ->set_required()
+        ->set_help_text('Три-четыре буквы, обозначающие город на латинице. Маленькими буквами без спец. знаков. Например: Москва - mscv, Санкт-Петербург - snpt, Иркутск - irkt, Новосибирск - nvsb и т.д. Связывает город, сотрудников и код. Нигде не выводится. Укажите один раз и <strong>не меняйте</strong>. Если для города появились сотрудники, значит название указано верно.'),
       Field::make('text', 'phone_number', 'Номер телефона')
         ->set_help_text('Выводится, например, в верхнем меню. Можно писать в любом виде, с любыми символами, скобками и тире — номер всё также будет открываться по нажатию.'),
       Field::make('text', 'email', 'Email')
@@ -60,6 +61,7 @@ function crb_attach_cities_options()
   ])
   ->add_tab('Город по умолчанию', [
     Field::make('select', 'default_city', 'Город по умолчанию')
+      ->set_required()
       ->set_help_text('Если у других городов нет какого-то значения ниже (телефона, карты и т.д.), то будет выводиться значение из данных этого города.')
       ->set_default_value(reset(get_cities_names()))
       ->set_options(get_cities_names()),
@@ -69,10 +71,10 @@ function crb_attach_cities_options()
       ->set_help_text('Если <strong>не</strong> установлено, то будут выводиться только общие сотрудники. <br>Если в городе нет сотрудников, то при его выборе будут открываться сотрудники из города по умолчанию или общие, если они включены.')
       ->set_default_value(true),
     Field::make('checkbox', 'general_employees_is_shown', 'Выводить общих сотрудников')
-      ->set_help_text('Если установлено, то будут выводиться сотрудники, не привязанные к какому-либо городу. Их поведение настраивается ниже. <br><strong>Не рекомендуется.</strong>')
+      ->set_help_text('Если установлено, то будут выводиться сотрудники, не привязанные к какому-либо городу. Их поведение настраивается ниже.')
       ->set_default_value(true),
     Field::make('checkbox', 'general_employees_is_separated', 'Выводить общих сотрудников отдельно')
-      ->set_help_text('Если установлено, то появляется отдельный "город" в карусели сотрудников: "Общие". Надпись можно сменить ниже. <br>Если не установлено, то выводит общих сотрудников в каждой карусели. <br>Рекомендуется отдельный вывод или же не выводить вовсе.')
+      ->set_help_text('Если установлено, то появляется отдельный "город" в карусели сотрудников: "Общие". Надпись можно сменить ниже. <br>Если не установлено, то выводит общих сотрудников в каждой карусели. <br><strong>Не рекомендуется.</strong>')
       ->set_default_value(true)
       ->set_conditional_logic([
         [
@@ -95,6 +97,7 @@ function crb_attach_cities_options()
         ],
       ]),
     Field::make('select', 'general_employees_order', 'Место в карусели')
+      ->set_required()
       ->set_help_text('Если в общей карусели мало людей (например, только администрация), то попробуйте "Начало". Учитывайте, что на телефонах люди видят только одну карточку сотрудника и малую часть следующей. <br>При варианте "Случайно" игнорируется порядок, задаваемый вами в списке сотрудников.')
       ->set_default_value('start')
       ->set_options([
@@ -128,6 +131,7 @@ function crb_attach_cities_options()
       ->set_default_value(true)
       ->set_help_text('Если калькулятор заполнен, но заявка оставлена не по его кнопке, то выводить это уточнение.'),
     Field::make('text', 'refine_calc_data_title', 'Текст надписи уточнения данных')
+      ->set_required()
       ->set_default_value('Уточните данные')
       ->set_conditional_logic([
         [
@@ -136,6 +140,7 @@ function crb_attach_cities_options()
         ]
       ]),
     Field::make('text', 'refine_calc_data_text', 'Пояснение к надписи уточнения данных')
+      ->set_required()
       ->set_default_value('Клиент заказал звонок не из калькулятора.')
       ->set_conditional_logic([
         [
@@ -147,6 +152,7 @@ function crb_attach_cities_options()
       ->set_default_value(true)
       ->set_help_text('Выводит в пиьсме название выбранного пользователем города.'),
     Field::make('text', 'selected_city_text', 'Текст поля выбранных контактов')
+      ->set_required()
       ->set_default_value('Выбранные контакты')
       ->set_conditional_logic([
         [
@@ -172,7 +178,8 @@ function crb_attach_cities_options()
         'singular_name' => 'файл'
       ])
       ->add_fields([
-        Field::make('text', 'name', 'Название'),
+        Field::make('text', 'name', 'Название')
+          ->set_required(),
         Field::make('file', 'id', 'Файл')
           ->set_help_text('Загрузите файл или используйте ссылку в поле ниже. Можно выбрать уже загруженный.'),
         Field::make('text', 'link', 'Ссылка')

@@ -28,7 +28,7 @@ function hide_settings_page($query) {
 add_action('pre_get_posts', 'hide_settings_page');
 
 function add_site_settings_to_menu() {
-  add_menu_page('Настройки темы', 'Настройки темы', 'manage_options', 'post.php?post=' . get_page_by_path("site-settings", NULL, "page")->ID . '&action=edit', '', 'dashicons-admin-generic', '61.31');
+  add_menu_page('Форма звонка', 'Форма звонка', 'manage_options', 'post.php?post=' . get_page_by_path("site-settings", NULL, "page")->ID . '&action=edit', '', 'dashicons-admin-generic', '61.31');
 }
 add_action( 'admin_menu', 'add_site_settings_to_menu' );
 
@@ -53,7 +53,7 @@ function higlight_custom_settings_page($file) {
 function edit_site_settings_title() {
   global $post, $title, $action, $current_screen;
   if (isset($current_screen->post_type) && $current_screen->post_type === 'page' && $action == 'edit' && $post->post_name === "site-settings") {
-    $title = 'Настройки темы';
+    $title = 'Форма звонка';
     ?>
     <style type="text/css">
       #post-body-content, #minor-publishing-actions, #misc-publishing-actions, #delete-action {

@@ -17,6 +17,7 @@ function crb_attach_employee_options()
   $employee_options_container
   ->add_fields([
     Field::make('text', 'crb_position', 'Должность')
+      ->set_required()
       ->set_help_text('Например: менеджер, аналитик и т.д.'),
     Field::make('text', 'crb_phone', 'Телефон')
       ->set_help_text('Старайтесь поддерживать единый вид номеров на всём сайте.'),
