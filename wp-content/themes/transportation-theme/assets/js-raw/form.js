@@ -68,16 +68,22 @@ function checkElementVisibility(element, offset = 0) {
 }
 
 function insertCalcDataToForm() {
-  formAdditionalDataOutput.value = JSON.stringify({
-    calc_data: {
-      refine_the_data: !findParentByClassName(form, 'pop-up-from-calc'),
+  if (!formAdditionalDataOutput) return;
 
-      sending_city: document.getElementsByClassName('js-calc-sending-city-output')[0]?.innerText?.trim() || undefined,
-      recipient_city: document.getElementsByClassName('js-calc-recipient-city-output')[0]?.innerText?.trim() || undefined,
-      volume: document.getElementsByClassName('js-calc-input-volume')[0]?.value?.trim() || undefined,
-      weight: document.getElementsByClassName('js-calc-input-weight')[0]?.value?.trim() || undefined,
-      calculated_tariff: symbolOfWeight.innerText?.trim() === 'кг' ? (outputVolume.innerText?.trim() + ' ' + symbolOfVolume.innerText?.trim()) : (outputWeight.innerText?.trim() + ' ' + symbolOfWeight.innerText?.trim()),
-      calculated_price: document.getElementsByClassName('js-calc-total-cost')[0]?.innerText?.trim() || undefined,
-    }
-  });
+  try {
+    formAdditionalDataOutput.value = JSON.stringify({
+      calc_data: {
+        refine_the_data: !findParentByClassName(form, 'pop-up-from-calc'),
+  
+        sending_city: document.getElementsByClassName('js-calc-sending-city-output')[0]?.innerText?.trim() || undefined,
+        recipient_city: document.getElementsByClassName('js-calc-recipient-city-output')[0]?.innerText?.trim() || undefined,
+        volume: document.getElementsByClassName('js-calc-input-volume')[0]?.value?.trim() || undefined,
+        weight: document.getElementsByClassName('js-calc-input-weight')[0]?.value?.trim() || undefined,
+        calculated_tariff: symbolOfWeight.innerText?.trim() === 'кг' ? (outputVolume.innerText?.trim() + ' ' + symbolOfVolume.innerText?.trim()) : (outputWeight.innerText?.trim() + ' ' + symbolOfWeight.innerText?.trim()),
+        calculated_price: document.getElementsByClassName('js-calc-total-cost')[0]?.innerText?.trim() || undefined,
+      }
+    });
+  } catch (error) {
+    return;
+  }
 }

@@ -4,7 +4,7 @@ function sendMail($name, $phone, Array $additional = [])
 {
   $recipients = get_global_field('call-pop-up-recipients');
   if ($recipients) {
-    $emailSubject = get_global_field('call-pop-up-email-subject') ? get_global_field('call-pop-up-email-subject') : 'Новая заявка с сайта severtrans.net';
+    $emailSubject = get_global_field('call-pop-up-email-subject') ? get_global_field('call-pop-up-email-subject') : 'Новая заявка с сайта lkstr.ru';
 
     return wp_mail($recipients, $emailSubject, getMailHtml($name, $phone, $additional), [
       'content-type' => 'text/html'
