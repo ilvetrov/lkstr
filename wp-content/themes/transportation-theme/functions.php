@@ -177,6 +177,8 @@ require get_template_directory() . '/inc/customizer.php';
  */
 require get_template_directory() . '/inc/img-blanks.php';
 
+require get_template_directory() . '/inc/get-current-url.php';
+
 require get_template_directory() . '/inc/carbon-fields/index.php';
 
 require get_template_directory() . '/inc/get-cities.php';

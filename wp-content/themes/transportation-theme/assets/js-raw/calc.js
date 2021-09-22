@@ -165,7 +165,7 @@ function getVolumeForOperations() {
     return volume;
   }
   if (typeof volume == 'number') {
-    return Math.max(volume, 1);
+    return Math.max(volume, minVolumeForCalc);
   }
 }
 function getWeight() {

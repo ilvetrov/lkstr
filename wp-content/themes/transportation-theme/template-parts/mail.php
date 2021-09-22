@@ -145,7 +145,7 @@ defined('ABSPATH') or die('Cannot access pages directly.');
                             </tr>
                             <tr>
                               <td style="padding: 7px 0 0 0;">
-                                <?php echo esc_html($additional['calc_data']['volume']); ?> м³ <?php if ($additional['calc_data']['volume'] < 1) echo '(расчёт по 1 м³)'; ?>
+                                <?php echo esc_html($additional['calc_data']['volume']); ?> м³ <?php if ($additional['calc_data']['volume'] < get_field('calc-min-volume-for-calc', get_option('page_on_front'))) echo '(расчёт по ' . get_field('calc-min-volume-for-calc', get_option('page_on_front')) . ' м³)'; ?>
                               </td>
                             </tr>
                           </table>
