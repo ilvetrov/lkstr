@@ -40,8 +40,8 @@
 	<?php } ?>
 
 	<?php if (get_the_excerpt()) { ?>
-		<meta property="og:description" content="<?php esc_html(get_the_excerpt()); ?>">
-		<meta property="twitter:description" content="<?php esc_html(get_the_excerpt()); ?>">
+		<meta property="og:description" content="<?php echo esc_html(get_the_excerpt()); ?>">
+		<meta property="twitter:description" content="<?php echo esc_html(get_the_excerpt()); ?>">
 	<?php } else if (trim(get_bloginfo('description'))) { ?>
 		<meta property="og:description" content="<?php echo esc_html(get_bloginfo('description')); ?>">
 		<meta property="twitter:description" content="<?php echo esc_html(get_bloginfo('description')); ?>">
