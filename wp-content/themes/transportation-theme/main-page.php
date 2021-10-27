@@ -690,10 +690,6 @@ get_header();
 </main>
 <!-- /.site-main -->
 
-<?php if (false): ?>
-<div class="bottom-blur js-change-transform-via-element-position" style="transform: translateY(100%);" data-element=".about-screen"></div>
-<?php endif; ?>
-
 <script>
   var employeesSliderByOne = <?php echo get_field('employees-slider-by-one') ? 'true' : 'false'; ?>;
   var calcCitiesData = <?php echo json_encode(get_field('calc-cities')['body']); ?>;
