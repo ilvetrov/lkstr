@@ -5,8 +5,19 @@
   const imagesElements = document.querySelectorAll('[data-async-image]');
   const loadingLazySupport = "loading" in HTMLImageElement.prototype;
 
-  let visibleImagesLoadList = [];
   let disabledImagesLoadList = [];
+  let currentImagesLoadListLastAccessTime = Date.now();
+  let currentImagesLoadList = new Proxy([], {
+    set: function(target, property, value, receiver) {      
+      target[property] = value;
+      currentImagesLoadListLastAccessTime = Date.now();
+      return true;
+    },
+    deleteProperty: function(target, property) {
+      currentImagesLoadListLastAccessTime = Date.now();
+      return true;
+    },
+  });
 
   const highLoadsPlan = [];
   const currentHighLoads = [];
@@ -46,11 +57,6 @@
         imageElement,
         callback: () => setAfterLoad(linksProperties, () => (linksProperties.isBackground ? backgroundSetter(linksProperties, imageElement) : tagImgSetter(linksProperties, imageElement)))
       });
-    } else {
-      visibleImagesLoadList.push({
-        linksProperties,
-        imageElement
-      });
     }
 
     window.addEventListener('load', setSrc);
@@ -65,7 +71,6 @@
       const handler = window.addEventListener(OptimizedScroll.defaultEventName, function() {
         if (!finished && checkThatObjectIsInScrollArea(imageElement, 800)) {
           finished = true;
-
           actionsWhenInScrollArea();
           
           setTimeout(() => requestAnimationFrame(() => window.removeEventListener(OptimizedScroll.defaultEventName, handler)), 0);
@@ -136,15 +141,26 @@
     imageElement.src = linksProperties.src;
   }
 
-  function setAfterLoad(linksProperties, callback) {
+  function setAfterLoad(linksProperties, callback, errorCallback = false) {
+    currentImagesLoadList.push(linksProperties);
+
     const newImage = new Image();
     newImage.src = linksProperties.src;
   
     newImage.onload = () => {
       callback();
-      visibleImagesLoadList = visibleImagesLoadList.filter(iterable => iterable.linksProperties.src !== linksProperties.src);
       disabledImagesLoadList = disabledImagesLoadList.filter(iterable => iterable.linksProperties.src !== linksProperties.src);
+      removeFromArray(currentImagesLoadList, linksProperties);
     };
+    ['abort', 'error', 'suspend'].map(eventName => {
+      newImage.addEventListener(eventName, () => {
+        if (errorCallback) {
+          errorCallback();
+        }
+        disabledImagesLoadList = disabledImagesLoadList.filter(iterable => iterable.linksProperties.src !== linksProperties.src);
+        removeFromArray(currentImagesLoadList, linksProperties);
+      });
+    });
   }
 
   function startHighLoad() {
@@ -161,27 +177,18 @@
       setTimeout(() => {
         startHighLoad();
       }, 0);
+    }, () => {
+      removeFromArray(currentHighLoads, img);
+
+      setTimeout(() => {
+        startHighLoad();
+      }, 0);
     }));
   }
 
   window.addEventListener('load', function() {
-    setInterval(() => {
-      for (let i = 0; i < visibleImagesLoadList.length; i++) {
-        const image = visibleImagesLoadList[i];
-        if (image.imageElement.src === image.linksProperties.src) {
-          requestAnimationFrame(() => removeFromArray(visibleImagesLoadList, image));
-        }
-      }
-      for (let i = 0; i < disabledImagesLoadList.length; i++) {
-        const image = disabledImagesLoadList[i];
-        if (image.imageElement.src === image.linksProperties.src) {
-          requestAnimationFrame(() => removeFromArray(disabledImagesLoadList, image));
-        }
-      }
-    }, 1000);
-  
     const disabledCheckInterval = setInterval(() => {
-      if (visibleImagesLoadList.length === 0) {
+      if (currentImagesLoadList.length === 0 && currentImagesLoadListLastAccessTime > 2000 && window.scrollY > 400) {
         clearInterval(disabledCheckInterval);
   
         for (let i = 0; i < disabledImagesLoadList.length; i++) {
