@@ -135,7 +135,7 @@ $mainPageId = get_option('page_on_front');
 										<li class="image-gallery-screen__carousel-item-wrap">
 											<div class="image-gallery-screen__carousel-item inner-page__gallery-item <?php if ($iteration == 0) { echo 'active-carousel-item'; } ?>">
 												<?php if (!empty($url)) { ?><a href="<?php echo $url; ?>" <?php echo ($target == 'true' ) ? 'target="_blank"' : ''; ?> class="image-gallery-screen__image-link"><?php } ?>
-													<img <?php imgAsyncSrc($full_image_url, true, 'img', true); ?> alt="<?php echo $alt; ?>" <?php echo ($title) ? 'title="' . $title . '"' : ''; ?> class="image-gallery-screen__image img-cover">
+													<img <?php imgAsyncSrc($full_image_url, true, false, true); ?> alt="<?php echo $alt; ?>" <?php echo ($title) ? 'title="' . $title . '"' : ''; ?> class="image-gallery-screen__image img-cover">
 													<div class="image-gallery-screen__carousel-item-black-cover"></div>
 												<?php if (!empty($url)) { ?></a><?php } ?>
 											</div>

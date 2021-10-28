@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main inner-page" <?php imgAsyncSrc('inner-page-text-background.jpg', false, 'background'); ?>>
+	<main id="primary" class="site-main inner-page" <?php imgAsyncSrc('inner-page-text-background.jpg', false, true); ?>>
 		<div class="container-size">
 			<div class="inner-page__wrap">
 				<section class="error-404 not-found">

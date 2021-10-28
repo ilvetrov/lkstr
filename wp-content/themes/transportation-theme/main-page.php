@@ -37,7 +37,7 @@ get_header();
   </section>
   <!-- /.first-screen -->
 
-  <section class="about-screen background-size" id="about-company" <?php imgAsyncSrc('about-screen-background.jpg', true, 'background'); ?>>
+  <section class="about-screen background-size" id="about-company" <?php imgAsyncSrc('about-screen-background.jpg', true, true); ?>>
     <div class="about-screen__container-size container-size">
       <div class="about-screen__content section-content">
         <h2 class="about-screen__title screen-title"><?php echo get_post_meta(get_the_ID(), 'about-screen-title', true); ?></h2>
@@ -81,14 +81,14 @@ get_header();
         <!-- /.about-screen__social-networks -->
       </div>
       <!-- /.about-screen__content -->
-      <div class="about-screen__container-on-background <?php if (get_field('about-screen-container-animation')) { echo 'prepare-container-animation'; } ?>" <?php imgAsyncSrc('container.png', false, 'background'); ?>></div>
+      <div class="about-screen__container-on-background <?php if (get_field('about-screen-container-animation')) { echo 'prepare-container-animation'; } ?>" <?php imgAsyncSrc('container.png', false, true); ?>></div>
     </div>
     <!-- /.about-screen__container size -->
   </section>
   <!-- /.about-screen -->
 
   <?php if (carbon_get_theme_option('cities_employees_is_shown') || carbon_get_theme_option('general_employees_is_shown')): ?>
-    <section class="team-screen background-size" id="our-team" <?php imgAsyncSrc('team-screen-background.jpg', true, 'background') ?>>
+    <section class="team-screen background-size" id="our-team" <?php imgAsyncSrc('team-screen-background.jpg', true, true) ?>>
       <div class="team-screen__container-size container-size">
         <div class="team-screen__content section-content" data-contact-city-group="employees" data-contact-city-default="<?php echo $default_employees_city_name; ?>" data-contact-city-changing-delay="100">
           <h2 class="team-screen__title screen-title"><?php the_field('team-screen-title'); ?></h2>
@@ -211,7 +211,7 @@ get_header();
   <?php endif; ?>
 
   <?php if (!get_field('image-gallery-screen-disabled')): ?>
-    <section class="image-gallery-screen background-size" id="photo-gallery" <?php imgAsyncSrc('image-gallery-screen-background.jpg', true, 'background'); ?>>
+    <section class="image-gallery-screen background-size" id="photo-gallery" <?php imgAsyncSrc('image-gallery-screen-background.jpg', true, true); ?>>
       <div class="image-gallery-screen__container-size container-size section-content">
         <h2 class="image-gallery-screen__title screen-title"><?php the_field('image-gallery-screen-title'); ?></h2>
         <!-- /.image-gallery-screen__title -->
@@ -272,7 +272,7 @@ get_header();
                         <li class="image-gallery-screen__carousel-item-wrap">
                           <div class="image-gallery-screen__carousel-item">
                             <?php if (!empty($url)) { ?><a href="<?php echo $url; ?>" <?php echo ($target == 'true' ) ? 'target="_blank"' : ''; ?> class="image-gallery-screen__image-link"><?php } ?>
-                              <img <?php imgAsyncSrc($full_image_url, true, 'img', true); ?> alt="<?php echo $alt; ?>" <?php echo ($title) ? 'title="' . $title . '"' : ''; ?> class="image-gallery-screen__image img-cover">
+                              <img <?php imgAsyncSrc($full_image_url, true, false, true); ?> alt="<?php echo $alt; ?>" <?php echo ($title) ? 'title="' . $title . '"' : ''; ?> class="image-gallery-screen__image img-cover">
                               <div class="image-gallery-screen__carousel-item-black-cover"></div>
                             <?php if (!empty($url)) { ?></a><?php } ?>
                           </div>
@@ -325,7 +325,7 @@ get_header();
                         <li class="image-gallery-screen__carousel-item-wrap">
                           <div class="image-gallery-screen__carousel-item <?php if ($iteration == 0) { echo 'active-carousel-item'; } ?>">
                             <?php if (!empty($url)) { ?><a href="<?php echo $url; ?>" <?php echo ($target == 'true' ) ? 'target="_blank"' : ''; ?> class="image-gallery-screen__image-link"><?php } ?>
-                              <img <?php imgAsyncSrc($full_image_url, true, 'img', true); ?> alt="<?php echo $alt; ?>" <?php echo ($title) ? 'title="' . $title . '"' : ''; ?> class="image-gallery-screen__image img-cover">
+                              <img <?php imgAsyncSrc($full_image_url, true, false, true); ?> alt="<?php echo $alt; ?>" <?php echo ($title) ? 'title="' . $title . '"' : ''; ?> class="image-gallery-screen__image img-cover">
                               <div class="image-gallery-screen__carousel-item-black-cover"></div>
                             <?php if (!empty($url)) { ?></a><?php } ?>
                           </div>
@@ -355,11 +355,11 @@ get_header();
     <!-- /.image-gallery-screen -->
   <?php endif; ?>
 
-  <section class="calc-screen background-size" id="calc" <?php imgAsyncSrc('calc-screen-background.jpg', true, 'background'); ?>>
+  <section class="calc-screen background-size" id="calc" <?php imgAsyncSrc('calc-screen-background.jpg', true, true); ?>>
     <div class="calc-screen__mobile-background">
       <div class="calc-screen__mobile-background-top"></div>
       <div class="calc-screen__mobile-background-bottom"></div>
-      <div class="calc-screen__mobile-background-lines background-size" <?php imgAsyncSrc('background-lines.png', true, 'background'); ?>></div>
+      <div class="calc-screen__mobile-background-lines background-size" <?php imgAsyncSrc('background-lines.png', true, true); ?>></div>
     </div>
     <!-- /.calc-screen__mobile-background -->
     <div class="calc-screen__container-size container-size">
@@ -506,7 +506,7 @@ get_header();
   </section>
   <!-- /.calc-screen -->
 
-  <section class="contact-screen background-size" id="contacts" <?php imgAsyncSrc('contact-screen-background.jpg', true, 'background'); ?>>
+  <section class="contact-screen background-size" id="contacts" <?php imgAsyncSrc('contact-screen-background.jpg', true, true); ?>>
     <div class="contact-screen__container-size container-size">
       <div class="contact-screen__content section-content">
         <div class="contact-screen__left-side">

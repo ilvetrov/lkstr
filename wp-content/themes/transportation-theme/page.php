@@ -15,7 +15,7 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main inner-page" <?php imgAsyncSrc('inner-page-text-background-endless.jpg', false, 'background'); ?>>
+	<main id="primary" class="site-main inner-page" <?php imgAsyncSrc('inner-page-text-background-endless.jpg', false, true); ?>>
 		<div class="container-size">
 			<div class="inner-page__wrap">
 				<?php
