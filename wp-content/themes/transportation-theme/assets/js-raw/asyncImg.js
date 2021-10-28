@@ -5,11 +5,14 @@
   const imagesElements = document.querySelectorAll('[data-async-image]');
   const loadingLazySupport = "loading" in HTMLImageElement.prototype;
 
+  let visibleImagesLoadList = [];
+  let disabledImagesLoadList = [];
+
   const highLoadsPlan = [];
   const currentHighLoads = [];
   
+  initAllNotManualAsyncImg();
   window.addEventListener('load', function() {
-    initAllNotManualAsyncImg();
     setTimeout(() => setInterval(() => requestAnimationFrame(startHighLoad), 1000), 2000);
   });
   function initAllNotManualAsyncImg() {
@@ -36,7 +39,21 @@
         setSrcForImg(linksProperties, imageElement);
       }
     }
-    setSrc();
+
+    if (checkDisabled(imageElement)) {
+      disabledImagesLoadList.push({
+        linksProperties,
+        imageElement,
+        callback: () => setAfterLoad(linksProperties, () => (linksProperties.isBackground ? backgroundSetter(linksProperties, imageElement) : tagImgSetter(linksProperties, imageElement)))
+      });
+    } else {
+      visibleImagesLoadList.push({
+        linksProperties,
+        imageElement
+      });
+    }
+
+    window.addEventListener('load', setSrc);
   }
   function waitImageInScrollArea(imageElement, linksProperties, callback) {
     if (!linksProperties.scroll) return actionsWhenInScrollArea();
@@ -63,7 +80,7 @@
             clearInterval(interval);
   
             if (linksProperties.size >= highLoadImageMinSize) {
-              highLoadsPlan.push({
+              addToHighLoadPlan({
                 linksProperties,
                 imageElement,
                 callback
@@ -75,7 +92,7 @@
         }, 500);
       } else {
         if (linksProperties.size >= highLoadImageMinSize) {
-          highLoadsPlan.push({
+          addToHighLoadPlan({
             linksProperties,
             imageElement,
             callback
@@ -92,9 +109,13 @@
 
     function setNow() {
       requestAnimationFrame(() => {
-        imageElement.style.backgroundImage = `url(${linksProperties.src})`;
+        backgroundSetter(linksProperties, imageElement);
       });
     }
+  }
+
+  function backgroundSetter(linksProperties, imageElement) {
+    imageElement.style.backgroundImage = `url(${linksProperties.src})`;
   }
   
   function setSrcForImg(linksProperties, imageElement) {
@@ -106,16 +127,24 @@
     
     function setNow() {
       requestAnimationFrame(() => {
-        imageElement.src = linksProperties.src;
+        tagImgSetter(linksProperties, imageElement);
       });
     }
+  }
+
+  function tagImgSetter(linksProperties, imageElement) {
+    imageElement.src = linksProperties.src;
   }
 
   function setAfterLoad(linksProperties, callback) {
     const newImage = new Image();
     newImage.src = linksProperties.src;
   
-    newImage.onload = callback;
+    newImage.onload = () => {
+      callback();
+      visibleImagesLoadList = visibleImagesLoadList.filter(iterable => iterable.linksProperties.src !== linksProperties.src);
+      disabledImagesLoadList = disabledImagesLoadList.filter(iterable => iterable.linksProperties.src !== linksProperties.src);
+    };
   }
 
   function startHighLoad() {
@@ -134,4 +163,43 @@
       }, 0);
     }));
   }
+
+  window.addEventListener('load', function() {
+    setInterval(() => {
+      for (let i = 0; i < visibleImagesLoadList.length; i++) {
+        const image = visibleImagesLoadList[i];
+        if (image.imageElement.src === image.linksProperties.src) {
+          requestAnimationFrame(() => removeFromArray(visibleImagesLoadList, image));
+        }
+      }
+      for (let i = 0; i < disabledImagesLoadList.length; i++) {
+        const image = disabledImagesLoadList[i];
+        if (image.imageElement.src === image.linksProperties.src) {
+          requestAnimationFrame(() => removeFromArray(disabledImagesLoadList, image));
+        }
+      }
+    }, 1000);
+  
+    const disabledCheckInterval = setInterval(() => {
+      if (visibleImagesLoadList.length === 0) {
+        clearInterval(disabledCheckInterval);
+  
+        for (let i = 0; i < disabledImagesLoadList.length; i++) {
+          const image = disabledImagesLoadList[i];
+          addToHighLoadPlan({
+            linksProperties: image.linksProperties,
+            imageElement: image.imageElement,
+            callback: image.callback
+          });
+        }
+      }
+    }, 1000);
+  });
+
+  function addToHighLoadPlan(highLoadFormat) {
+    if (!highLoadsPlan.find(tested => tested.imageElement === highLoadFormat.imageElement) && highLoadFormat.linksProperties.src !== highLoadFormat.imageElement.src) {
+      highLoadsPlan.push(highLoadFormat);
+    }
+  }
+
 }());
