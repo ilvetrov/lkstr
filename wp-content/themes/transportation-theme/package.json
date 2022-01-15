@@ -19,10 +19,9 @@
     "gulp-plumber": "^1.2.0",
     "gulp-uglify-es": "^1.0.4",
     "pumpify": "^2.0.1",
-    "through2": "^4.0.2"
-  },
-  "dependencies": {
+    "through2": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "is-negated-glob": "^1.0.0"
-  }
+  },
+  "dependencies": {}
 }
